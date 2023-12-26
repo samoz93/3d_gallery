@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  /* --card: hsl(237 36% 10%); */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.glass_gradient {
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4.1px);
+  -webkit-backdrop-filter: blur(4.1px);
+}
+
+.card {
+  --br-width: 10px;
+  --angle: 120;
+  --spread: 80;
+  --blur: 30;
+  position: relative;
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  cursor: pointer;
+  padding: 5px;
+  border: rgba(255, 255, 255, 0.09) 2px solid;
+}
+
+.card::after,
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  height: calc(100% + var(--br-width));
+  width: calc(100% + var(--br-width));
+  transform: translate(
+    calc(var(--br-width) * -0.5),
+    calc(var(--br-width) * -0.5)
+  );
+  padding: 10px;
+  mask-composite: intersect;
+  mask-clip: padding-box, border-box;
+  background: conic-gradient(
+    from 180deg at 50% 70%,
+    hsla(0, 0%, 98%, 1) 0deg,
+    #eec32d 72.0000010728836deg,
+    #ec4b4b 144.0000021457672deg,
+    #709ab9 216.00000858306885deg,
+    #4dffbf 288.0000042915344deg,
+    hsla(0, 0%, 98%, 1) 1turn
+  );
+  background-attachment: fixed;
+  mask: linear-gradient(#0000, #0000),
+    conic-gradient(
+      from calc((var(--angle) - var(--spread) * 0.5) * 1deg),
+      #0000,
+      #fff,
+      #0000 calc(var(--spread) * 1deg)
+    );
+  filter: blur(calc(var(--blur) * 1px));
+  backdrop-filter: blur(calc(var(--blur) * 1px));
+  opacity: 0.8;
+  transition: all 2s;
+}

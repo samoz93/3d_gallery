@@ -1,0 +1,11 @@
+Model Information:
+* title:	DNA
+* source:	https://sketchfab.com/3d-models/dna-6d7adbbe634441e7b0bbda26848e4e67
+* author:	ABSoln (https://sketchfab.com/ABSoln)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "DNA" (https://sketchfab.com/3d-models/dna-6d7adbbe634441e7b0bbda26848e4e67) by ABSoln (https://sketchfab.com/ABSoln) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
