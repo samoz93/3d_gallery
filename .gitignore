@@ -1,7 +1,0 @@
-!.env
-api/
-frontend/
-
-
-compose-prod.yaml
-compose.yaml
