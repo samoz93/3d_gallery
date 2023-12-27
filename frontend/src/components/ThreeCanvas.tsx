@@ -1,4 +1,5 @@
-import { OrbitControls, Sky, SoftShadows } from "@react-three/drei";
+"use client";
+import { OrbitControls, SoftShadows } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { folder, useControls } from "leva";
@@ -28,6 +29,7 @@ export const ThreeCanvas = ({
       }),
     }
   );
+
   return (
     <div className="relative h-full w-full">
       {!isLoaded && (
@@ -37,7 +39,7 @@ export const ThreeCanvas = ({
       <Canvas
         onCreated={() => setIsLoaded(true)}
         camera={{
-          position: [5, 5, 2],
+          position: [0, 1, 5],
         }}
         shadows="percentage"
         className="h-full z-10 relative"
@@ -52,7 +54,7 @@ export const ThreeCanvas = ({
         ></directionalLight>
         <SoftShadows size={0.5} samples={10} focus={1} />
         {children}
-        <Sky />
+        {/* <Sky /> */}
         <mesh
           receiveShadow
           rotation={[-Math.PI * 0.5, 0, 0]}

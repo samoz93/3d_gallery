@@ -1,6 +1,12 @@
 import { useEffect, useRef } from "react";
 
-export const GlowingDiv = ({ children }: { children: React.ReactNode }) => {
+export const GlowingDiv = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -18,7 +24,12 @@ export const GlowingDiv = ({ children }: { children: React.ReactNode }) => {
     return () => window.removeEventListener("mousemove", calculateRef);
   }, []);
   return (
-    <div ref={ref} className="card h-full cursor-wait w-full flex items-center">
+    <div
+      ref={ref}
+      className={`card h-full cursor-wait flex items-center justify-center ${
+        className || ""
+      }`}
+    >
       {children}
     </div>
   );

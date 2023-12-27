@@ -24,9 +24,7 @@ WORKDIR /
 COPY --from=deps frontend/node_modules ./frontend/node_modules
 COPY . .
 
-ENV NODE_ENV development
-WORKDIR /frontend
-RUN npm run dev
+
 
 # Rebuild the source code only when needed
 FROM base AS builder

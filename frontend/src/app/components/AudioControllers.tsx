@@ -1,3 +1,7 @@
+"use client";
+
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { styled } from "@mui/material/styles";
 import { IAudioRef } from "@types";
 import {
   Ref,
@@ -8,6 +12,22 @@ import {
   useState,
 } from "react";
 import { Audio, AudioAnalyser, AudioListener, AudioLoader } from "three";
+import { FancySelect } from "./FancySelect";
+import { StaticButton } from "./StaticButton";
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
+
+const audioOptions = ["Best Time", "Electro", "Satara"];
 
 const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
   useImperativeHandle(
@@ -48,21 +68,32 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
   }, [file]);
 
   return (
-    <div className="absolute bottom-0 left-0">
-      <input
-        type="file"
-        name=""
-        id=""
-        onChange={(e) => {
-          if (file) {
-            setFile("");
-          }
-          if (e?.target.files && e!.target!.files![0]) {
-            const dataSource = URL.createObjectURL(e.target.files[0]!);
-            setFile(dataSource);
-          }
+    <div className="absolute bottom-0 left-0 flex flex-row ml-5 my-2 gap-5 h-12">
+      <FancySelect
+        onItemSelected={(e) => {
+          setFile(`/audio/${e}.mp3`);
         }}
+        options={audioOptions}
       />
+      <StaticButton
+        component="label"
+        variant="contained"
+        endIcon={<CloudUploadIcon />}
+      >
+        <p>Upload file</p>
+        <VisuallyHiddenInput
+          type="file"
+          onChange={(e) => {
+            if (file) {
+              setFile("");
+            }
+            if (e?.target.files && e!.target!.files![0]) {
+              const dataSource = URL.createObjectURL(e.target.files[0]!);
+              setFile(dataSource);
+            }
+          }}
+        />
+      </StaticButton>
     </div>
   );
 };

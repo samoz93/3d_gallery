@@ -12,7 +12,7 @@ services:
     build:
       context: ./
       target: runner
-      dockerfile: ./Dockerfile-FE
+      dockerfile: ./Dockerfile_fe
     container_name: 3d_gallery_FE
     ports:
       - 3000:3000
