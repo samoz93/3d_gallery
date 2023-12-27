@@ -76,6 +76,7 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
         options={audioOptions}
       />
       <StaticButton
+        //@ts-ignore
         component="label"
         variant="contained"
         endIcon={<CloudUploadIcon />}

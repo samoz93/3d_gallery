@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutProps } from "@next/types/app/layout";
+import { LayoutProps } from "@next/types/app/page";
 import { Leva } from "leva";
 
 export default function Layout({ children }: LayoutProps) {
