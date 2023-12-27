@@ -42,6 +42,7 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
     []
   );
   const [file, setFile] = useState("");
+  const [progress, setProgress] = useState(-1);
 
   const listener = useRef(new AudioListener());
   const sound = useRef<Audio>();
@@ -54,13 +55,19 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
     sound.current = new Audio(listener.current);
     analyser.current = new AudioAnalyser(sound.current, 1024);
 
-    loader.current.load(file, function (buffer) {
-      console.log(buffer);
-      sound.current?.setBuffer(buffer);
-      sound.current?.setLoop(true);
-      sound.current?.setVolume(0.1);
-      sound.current?.play();
-    });
+    loader.current.load(
+      file,
+      function (buffer) {
+        sound.current?.setBuffer(buffer);
+        sound.current?.setLoop(true);
+        sound.current?.setVolume(0.1);
+        sound.current?.play();
+        setProgress(-1);
+      },
+      (pr) => {
+        setProgress(pr.loaded / pr.total);
+      }
+    );
 
     return () => {
       sound.current?.stop();
@@ -68,7 +75,7 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
   }, [file]);
 
   return (
-    <div className="absolute bottom-0 left-0 flex flex-row ml-5 my-2 gap-5 h-12">
+    <div className="absolute bottom-0 left-0 flex-row ml-5 my-2 gap-5 h-12 flex items-center">
       <FancySelect
         onItemSelected={(e) => {
           setFile(`/audio/${e}.mp3`);
@@ -95,6 +102,7 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
           }}
         />
       </StaticButton>
+      {progress > -1 && <h1>{Math.round(progress * 100)}%</h1>}
     </div>
   );
 };
