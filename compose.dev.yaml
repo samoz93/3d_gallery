@@ -61,8 +61,8 @@ services:
     restart: always
     environment:
       AUTH: yes
-      MONGO_INITDB_ROOT_USERNAME: samoz93
-      MONGO_INITDB_ROOT_PASSWORD: samoz9393
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
       - 27017:27017
     volumes:
