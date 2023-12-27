@@ -3,13 +3,13 @@
 import { useFrame } from "@react-three/fiber";
 import { ReactNode } from "react";
 import { ShaderMaterial } from "three";
+import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 
 export default function UniformUpdater({
   materials,
-  basicRotation,
   children,
 }: {
-  materials: ShaderMaterial[];
+  materials: ShaderMaterial[] | CustomShaderMaterial[];
   children: ReactNode;
   basicRotation?: boolean;
 }) {

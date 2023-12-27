@@ -10,8 +10,8 @@
 services:
   front-end:
     build:
-      context: ./front-end
-      target: dev
+      context: ./frontend
+      target: production
     container_name: samoz
     environment:
       ENV_VARIABLE: ${ENV_VARIABLE}
@@ -22,7 +22,7 @@ services:
     ports:
       - 3000:3000
     restart: always
-    command: npm run dev
+    # command: npm run dev
     volumes:
       - ./frontend/src:/src
       - ./frontend/public:/public
@@ -30,24 +30,24 @@ services:
     networks:
       - my_network
 
-  api:
-    container_name: api
-    build:
-      context: ./api
-      target: development
-    volumes:
-      - ./api:/usr/src/app
-      - ./api/node_modules:/usr/src/app/node_modules
-    ports:
-      - 3001:3000
-    command: npm run start:dev
-    env_file:
-      - ./frontend/.env
-    networks:
-      - my_network
-    depends_on:
-      - redis
-      - mongo
+  # api:
+  #   container_name: api
+  #   build:
+  #     context: ./api
+  #     target: production
+  #   volumes:
+  #     - ./api:/usr/src/app
+  #     - ./api/node_modules:/usr/src/app/node_modules
+  #   ports:
+  #     - 3001:3000
+  #   # command: npm run start:dev
+  #   env_file:
+  #     - ./frontend/.env
+  #   networks:
+  #     - my_network
+  #   depends_on:
+  #     - redis
+  #     - mongo
 
   redis:
     container_name: redis
@@ -60,9 +60,8 @@ services:
     image: mongo
     restart: always
     environment:
-      AUTH: yes
-      MONGO_INITDB_ROOT_USERNAME: samoz93
-      MONGO_INITDB_ROOT_PASSWORD: samoz9393
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
       - 27017:27017
     volumes:

@@ -1,4 +1,4 @@
-import { IAudioRef } from "@types/audio.interfaces";
+import { IAudioRef } from "@types";
 import {
   Ref,
   forwardRef,
@@ -21,7 +21,7 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
     }),
     []
   );
-  const [file, setFile] = useState();
+  const [file, setFile] = useState("");
 
   const listener = useRef(new AudioListener());
   const sound = useRef<Audio>();
@@ -55,10 +55,12 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
         id=""
         onChange={(e) => {
           if (file) {
-            setFile(undefined);
+            setFile("");
           }
-          if (e.target.files[0])
-            setFile(URL.createObjectURL(e.target.files[0]));
+          if (e?.target.files && e!.target!.files![0]) {
+            const dataSource = URL.createObjectURL(e.target.files[0]!);
+            setFile(dataSource);
+          }
         }}
       />
     </div>

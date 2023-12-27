@@ -78,6 +78,7 @@ export const DancerScene = ({
   });
 
   useEffect(() => {
+    //@ts-ignore
     material.roughness = roughness;
   }, [roughness]);
 

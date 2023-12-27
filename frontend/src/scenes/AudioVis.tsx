@@ -4,7 +4,7 @@ import { Html } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { AudioComps } from "@samoz/app/components/AudioControllers";
 import UniformUpdater from "@samoz/components/UniformUpdater";
-import { IAudioRef } from "@types/audio.interfaces";
+import { IAudioRef } from "@types";
 import { useControls } from "leva";
 import { useEffect, useMemo, useRef } from "react";
 import {
@@ -72,9 +72,9 @@ export const AudioVis = ({
     []
   );
 
-  const ref = useRef<IAudioRef>();
-  const meshRef = useRef<THREE.Mesh>();
-  const meshWireframeRef = useRef<THREE.Mesh>();
+  const ref = useRef<IAudioRef>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
+  const meshWireframeRef = useRef<THREE.LineSegments<any>>(null);
 
   useFrame(({ clock }, delta, x) => {
     const fq = (ref.current?.getAvgFrequency() ?? 0) * 0.01;

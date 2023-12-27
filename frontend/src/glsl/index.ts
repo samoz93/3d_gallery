@@ -1,3 +1,4 @@
+//@ts-nocheck
 import audio_vis_frag from "./audio_vis_frag.glsl";
 import audio_vis_ver from "./audio_vis_ver.glsl";
 import dissolve_frag from "./dissolve_frag.glsl";
