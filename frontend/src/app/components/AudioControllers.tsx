@@ -1,6 +1,8 @@
 "use client";
 
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import PauseIcon from "@mui/icons-material/Pause";
+import PlayIcon from "@mui/icons-material/PlayCircle";
+import UploadIcon from "@mui/icons-material/Upload";
 import { styled } from "@mui/material/styles";
 import { IAudioRef } from "@types";
 import {
@@ -41,13 +43,29 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
     }),
     []
   );
+
   const [file, setFile] = useState("");
+  const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(-1);
 
   const listener = useRef(new AudioListener());
   const sound = useRef<Audio>();
   const loader = useRef(new AudioLoader());
   const analyser = useRef<AudioAnalyser>();
+
+  const toggle = () => {
+    const isPlaying = sound.current?.isPlaying ?? false;
+    setIsPlaying(!isPlaying);
+    sound.current?.isPlaying ? sound.current?.pause() : sound.current?.play();
+  };
+
+  useEffect(() => {
+    if (isPlaying) {
+      sound.current?.play();
+    } else {
+      sound.current?.pause();
+    }
+  }, [isPlaying]);
 
   useEffect(() => {
     sound.current?.stop();
@@ -61,8 +79,8 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
         sound.current?.setBuffer(buffer);
         sound.current?.setLoop(true);
         sound.current?.setVolume(0.1);
-        sound.current?.play();
         setProgress(-1);
+        setIsPlaying(true);
       },
       (pr) => {
         setProgress(pr.loaded / pr.total);
@@ -86,7 +104,7 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
         //@ts-ignore
         component="label"
         variant="contained"
-        endIcon={<CloudUploadIcon />}
+        endIcon={<UploadIcon />}
       >
         <p>Upload file</p>
         <VisuallyHiddenInput
@@ -103,6 +121,16 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
         />
       </StaticButton>
       {progress > -1 && <h1>{Math.round(progress * 100)}%</h1>}
+
+      <StaticButton
+        //@ts-ignore
+        component="label"
+        variant="contained"
+        endIcon={isPlaying ? <PauseIcon /> : <PlayIcon />}
+        onClick={toggle}
+      >
+        {isPlaying ? "Pause" : "Play"}
+      </StaticButton>
     </div>
   );
 };

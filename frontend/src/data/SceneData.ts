@@ -1,4 +1,9 @@
 import {
+  AudioVis,
+  DancerScene,
+  PlumbusSphere,
+} from "@samoz/app/scene_components";
+import {
   audio_vis_frag,
   audio_vis_ver,
   dissolve_frag,
@@ -6,7 +11,6 @@ import {
   plumbus_frag,
   plumbus_ver,
 } from "@samoz/glsl";
-import { AudioVis, DancerScene, PlumbusSphere } from "@samoz/scenes";
 
 export const SceneData = [
   {

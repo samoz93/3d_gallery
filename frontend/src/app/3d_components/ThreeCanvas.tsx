@@ -2,6 +2,7 @@
 import { OrbitControls, SoftShadows } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
+import { Loader } from "@samoz/app/components/Loader";
 import { folder, useControls } from "leva";
 import { ReactNode, useState } from "react";
 
@@ -32,9 +33,7 @@ export const ThreeCanvas = ({
 
   return (
     <div className="relative h-full w-full">
-      {!isLoaded && (
-        <p className="absolute top-1/2 z-20 text-white left-1/2">Is Loading </p>
-      )}
+      {!isLoaded && <Loader />}
 
       <Canvas
         onCreated={() => setIsLoaded(true)}

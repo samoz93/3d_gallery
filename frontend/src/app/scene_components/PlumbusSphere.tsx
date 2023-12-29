@@ -1,6 +1,6 @@
 "use client";
 
-import UniformUpdater from "@samoz/components/UniformUpdater";
+import { UniformUpdater } from "@samoz/app/3d_components/UniformUpdater";
 import { useMemo } from "react";
 import {
   MeshDepthMaterial,

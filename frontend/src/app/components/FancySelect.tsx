@@ -5,12 +5,16 @@ import { useEffect, useState } from "react";
 
 export const FancySelect = ({
   options,
+  placeholder,
   onItemSelected,
 }: {
   options: string[];
   onItemSelected?: (item: string) => void;
+  placeholder?: string;
 }) => {
-  const [selectedOption, setSelectedOption] = useState("Select audio");
+  const [selectedOption, setSelectedOption] = useState(
+    placeholder ?? "Select audio"
+  );
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
