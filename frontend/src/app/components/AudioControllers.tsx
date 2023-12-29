@@ -31,7 +31,19 @@ const VisuallyHiddenInput = styled("input")({
 
 const audioOptions = ["Best Time", "Electro", "Satara"];
 
-const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
+const AudioControllers = (
+  {
+    onVersionChanged,
+  }: {
+    onVersionChanged?: (version: number) => void;
+  },
+  ref: Ref<IAudioRef>
+) => {
+  const [file, setFile] = useState("");
+  const [version, setVersion] = useState(1);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(-1);
+
   useImperativeHandle(
     ref,
     () => ({
@@ -41,12 +53,8 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
       stop: () => sound.current?.stop(),
       play: () => sound.current?.play(),
     }),
-    []
+    [version]
   );
-
-  const [file, setFile] = useState("");
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(-1);
 
   const listener = useRef(new AudioListener());
   const sound = useRef<Audio>();
@@ -56,7 +64,10 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
   const toggle = () => {
     const isPlaying = sound.current?.isPlaying ?? false;
     setIsPlaying(!isPlaying);
-    sound.current?.isPlaying ? sound.current?.pause() : sound.current?.play();
+  };
+
+  const toggleVersion = () => {
+    setVersion((ver) => (ver === 1 ? 2 : 1));
   };
 
   useEffect(() => {
@@ -66,6 +77,10 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
       sound.current?.pause();
     }
   }, [isPlaying]);
+
+  useEffect(() => {
+    onVersionChanged && onVersionChanged(version);
+  }, [version, onVersionChanged]);
 
   useEffect(() => {
     sound.current?.stop();
@@ -120,7 +135,6 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
           }}
         />
       </StaticButton>
-      {progress > -1 && <h1>{Math.round(progress * 100)}%</h1>}
 
       <StaticButton
         //@ts-ignore
@@ -131,6 +145,17 @@ const AudioControllers = (props: any, ref: Ref<IAudioRef>) => {
       >
         {isPlaying ? "Pause" : "Play"}
       </StaticButton>
+
+      <StaticButton
+        //@ts-ignore
+        component="label"
+        variant="contained"
+        endIcon={isPlaying ? <PauseIcon /> : <PlayIcon />}
+        onClick={toggleVersion}
+      >
+        {`toggle version :${version}`}
+      </StaticButton>
+      {progress > -1 && <h1>{Math.round(progress * 100)}%</h1>}
     </div>
   );
 };

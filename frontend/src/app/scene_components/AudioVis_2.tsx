@@ -4,19 +4,19 @@ import { Html } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { UniformUpdater } from "@samoz/app/3d_components/UniformUpdater";
 import { AudioComps } from "@samoz/app/components/AudioControllers";
-import { audio_vis_2_frag, audio_vis_2_ver } from "@samoz/glsl";
 import { IAudioRef } from "@types";
 import { useControls } from "leva";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import {
   Color,
+  IcosahedronGeometry,
   MeshDepthMaterial,
   MeshPhysicalMaterial,
   RGBADepthPacking,
 } from "three";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 
-export const AudioVis = ({
+export const AudioVis_2 = ({
   glsl,
 }: {
   children?: React.ReactNode;
@@ -33,35 +33,26 @@ export const AudioVis = ({
     color4: { value: "pink" },
   });
 
-  const [version, setVersion] = useState(1);
+  const lineScaler = 1.09;
 
-  useEffect(() => {
-    const colorArr = Object.values(colors).map((c) => new Color(c));
-    material.uniforms.uRadius.value = uRadius;
-    depthMaterial.uniforms.uRadius.value = uRadius;
-    material.uniforms.uColors.value = colorArr;
-  }, [colors, uRadius]);
+  const geometry = useMemo(() => {
+    return new IcosahedronGeometry(1, 100);
+  }, []);
 
   const material = useMemo(() => {
-    const glslData =
-      version === 1
-        ? glsl
-        : {
-            vertexShader: audio_vis_2_ver,
-            fragmentShader: audio_vis_2_frag,
-          };
     return new CustomShaderMaterial({
       baseMaterial: new MeshPhysicalMaterial({ color: "blue" }),
-      vertexShader: glslData.vertexShader,
-      fragmentShader: glslData.fragmentShader,
+      vertexShader: glsl.vertexShader,
+      fragmentShader: glsl.fragmentShader,
       uniforms: {
         uRadius: { value: 1 },
         uTime: { value: 1 },
         uFrequency: { value: 1 },
         uColors: { value: Object.values(colors).map((c) => new Color(c)) },
+        uData: { value: ref.current?.getAudioData() },
       },
     });
-  }, [colors, version]);
+  }, [colors]);
 
   const depthMaterial = useMemo(
     () =>
@@ -88,6 +79,7 @@ export const AudioVis = ({
   useFrame(({ clock }, delta, x) => {
     const fq = (ref.current?.getAvgFrequency() ?? 0) * 0.01;
     material.uniforms.uFrequency.value = fq;
+    // material.uniforms.uData.value = getnewAttr();
     depthMaterial.uniforms.uFrequency.value = fq;
     if (!meshRef.current || !meshWireframeRef.current) return;
 
@@ -99,23 +91,24 @@ export const AudioVis = ({
     meshWireframeRef.current.rotation.x -= delta * 0.0005 + fq * 0.005;
   });
 
-  const lineScaler = 1.09;
+  useEffect(() => {
+    const colorArr = Object.values(colors).map((c) => new Color(c));
+    material.uniforms.uRadius.value = uRadius;
+    depthMaterial.uniforms.uRadius.value = uRadius;
+    material.uniforms.uColors.value = colorArr;
+  }, [colors, uRadius]);
+
   return (
     <UniformUpdater materials={[material, depthMaterial]} basicRotation>
       <mesh
         ref={meshRef}
         castShadow
         material={material}
+        geometry={geometry}
         customDepthMaterial={depthMaterial}
-      >
-        {version === 1 ? (
-          <icosahedronGeometry args={[1, 100]} />
-        ) : (
-          <sphereGeometry args={[1, 100, 100, 100]}></sphereGeometry>
-        )}
-      </mesh>
+      ></mesh>
       <Html fullscreen className="h-full html_cls">
-        <AudioComps onVersionChanged={setVersion} ref={ref} />
+        <AudioComps ref={ref} />
       </Html>
       <lineSegments
         ref={meshWireframeRef}

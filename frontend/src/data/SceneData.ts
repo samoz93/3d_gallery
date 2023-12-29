@@ -43,4 +43,14 @@ export const SceneData = [
       fragmentShader: audio_vis_frag,
     },
   },
+  // {
+  //   key: "AudioVisualizer_2",
+  //   value: "Audio Visualizer 2",
+  //   comp: AudioVis_2,
+  //   path: "AudioVisualizer2",
+  //   glsl: {
+  //     vertexShader: audio_vis_ver_3,
+  //     fragmentShader: audio_vis_frag_3,
+  //   },
+  // },
 ];
