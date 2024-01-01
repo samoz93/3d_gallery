@@ -4,8 +4,8 @@ import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Loader } from "@samoz/app/components/Loader";
 import { folder, useControls } from "leva";
-import { ReactNode, useContext, useState } from "react";
-import { CanvasContext } from "../stores/CanvasContext";
+import { ReactNode, useState } from "react";
+import { useCanvasContext } from "../stores/CanvasContext";
 
 export const ThreeCanvas = ({
   children,
@@ -19,7 +19,8 @@ export const ThreeCanvas = ({
   };
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const { bloom, camera } = useContext(CanvasContext);
+
+  const [{ camera, bloom }] = useCanvasContext();
 
   const { intensity, smoothing, threshold, disable } = useControls(
     "Main Scene",

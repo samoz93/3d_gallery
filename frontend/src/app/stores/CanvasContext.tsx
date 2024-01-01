@@ -1,91 +1,34 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useMemo, useReducer } from "react";
+import {
+  Actions,
+  CanvasContextType,
+  CanvasReducer,
+  DefaultCanvasContextValue,
+} from "./CanvasReducer";
 
-type CanvasContextType = {
-  bloom: {
-    intensity: number;
-    smoothing: number;
-    threshold: number;
-    disable: boolean;
-  };
-  camera: {
-    disableOrbitControls: boolean;
-  };
-};
+type ContextReducerType = [
+  CanvasContextType,
+  React.Dispatch<{
+    type: Actions;
+  }>
+];
 
-type ContextActions = {
-  disableBloom: () => void;
-  enableBloom: () => void;
-  disableOrbitControls: () => void;
-  enableOrbitControls: () => void;
-};
+const AppContext = createContext<ContextReducerType>(null as any);
 
-export const CanvasContext = createContext<CanvasContextType & ContextActions>({
-  bloom: {
-    intensity: 1.1,
-    threshold: 0.4,
-    smoothing: 0.1,
-    disable: false,
-  },
-  camera: {
-    disableOrbitControls: false,
-  },
-});
-
-export const CanvasContextProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  const [state, setState] = useState<CanvasContextType>({
-    bloom: {
-      intensity: 1.1,
-      threshold: 0.4,
-      smoothing: 0.1,
-      disable: false,
-    },
-    camera: {
-      disableOrbitControls: false,
-    },
-  });
-
-  const ctx = {
-    ...state,
-    disableBloom: () =>
-      setState((state) => ({
-        ...state,
-        bloom: {
-          ...state.bloom,
-          disable: true,
-        },
-      })),
-    disableOrbitControls: () => {
-      setState((state) => ({
-        ...state,
-        camera: {
-          ...state.camera,
-          disableOrbitControls: true,
-        },
-      }));
-    },
-    enableOrbitControls: () => {
-      setState((state) => ({
-        ...state,
-        camera: {
-          ...state.camera,
-          disableOrbitControls: false,
-        },
-      }));
-    },
-    enableBloom: () =>
-      setState((state) => ({
-        ...state,
-        bloom: {
-          ...state.bloom,
-          disable: false,
-        },
-      })),
-  };
-  return (
-    <CanvasContext.Provider value={ctx}>{children}</CanvasContext.Provider>
+export function CanvasWrapper({ children }: { children: React.ReactNode }) {
+  const [state, dispatch] = useReducer(
+    CanvasReducer,
+    DefaultCanvasContextValue
   );
-};
+
+  const contextValue = useMemo<ContextReducerType>(() => {
+    return [state, dispatch];
+  }, [state, dispatch]);
+
+  return (
+    <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
+  );
+}
+export function useCanvasContext(): ContextReducerType {
+  return useContext(AppContext);
+}
