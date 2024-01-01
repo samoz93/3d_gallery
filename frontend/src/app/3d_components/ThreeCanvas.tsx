@@ -19,7 +19,7 @@ export const ThreeCanvas = ({
   };
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const { bloom } = useContext(CanvasContext);
+  const { bloom, camera } = useContext(CanvasContext);
 
   const { intensity, smoothing, threshold, disable } = useControls(
     "Main Scene",
@@ -50,7 +50,7 @@ export const ThreeCanvas = ({
         className="h-full z-10 relative"
       >
         <ambientLight />
-        <OrbitControls />
+        <OrbitControls enabled={!camera.disableOrbitControls} />
         <directionalLight
           castShadow
           color={"white"}

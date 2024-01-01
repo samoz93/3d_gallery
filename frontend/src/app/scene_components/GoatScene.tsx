@@ -2,15 +2,23 @@
 
 import { useGLTF, useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Group, Mesh, ShaderMaterial, Texture } from "three";
 import { UniformUpdater } from "../3d_components/UniformUpdater";
+import { CanvasContext } from "../stores/CanvasContext";
 
 export const GoatScene = ({
   glsl,
 }: {
   glsl: { vertexShader: string; fragmentShader: string };
 }) => {
+  const {
+    disableBloom,
+    disableOrbitControls,
+    enableBloom,
+    enableOrbitControls,
+  } = useContext(CanvasContext);
+
   const { scene } = useGLTF("/models/goat.glb", true);
   const material = new ShaderMaterial({
     vertexShader: glsl.vertexShader,
@@ -37,8 +45,18 @@ export const GoatScene = ({
   const ref = useRef<Group<any>>(null);
 
   useFrame(({ clock }) => {
-    ref.current!.rotation.y += clock.getElapsedTime() * 0.00001;
+    ref.current!.rotation.y += clock.getElapsedTime() * 0.0001;
   });
+
+  useEffect(() => {
+    disableOrbitControls();
+    disableBloom();
+
+    return () => {
+      enableBloom();
+      enableOrbitControls();
+    };
+  }, []);
 
   return (
     <UniformUpdater materials={[material]}>
