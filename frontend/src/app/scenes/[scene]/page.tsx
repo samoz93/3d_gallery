@@ -1,5 +1,7 @@
 "use client";
+export const revalidate = 0;
 
+import { ThreeLoader } from "@samoz/app/3d_components/ThreeLoader";
 import { SceneData } from "@samoz/data";
 import { Suspense, useMemo } from "react";
 
@@ -15,5 +17,9 @@ export default function ScenePage({ params }: { params: { scene: string } }) {
       ({} as ScenePageProps)
     );
   }, [params.scene]);
-  return <Suspense fallback={null}>{Scene && <Scene glsl={glsl} />}</Suspense>;
+  return (
+    <Suspense fallback={<ThreeLoader />}>
+      {Scene && <Scene glsl={glsl} />}
+    </Suspense>
+  );
 }

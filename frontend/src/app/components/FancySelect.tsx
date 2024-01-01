@@ -20,7 +20,8 @@ export const FancySelect = ({
   useEffect(() => {
     setIsExpanded(false);
     onItemSelected && onItemSelected(selectedOption);
-  }, [selectedOption]);
+  }, [selectedOption, onItemSelected]);
+
   return (
     <motion.div
       className="input_sizing relative"

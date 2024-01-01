@@ -3,6 +3,7 @@ import {
   DancerScene,
   PlumbusSphere,
 } from "@samoz/app/scene_components";
+import { GoatScene } from "@samoz/app/scene_components/GoatScene";
 import {
   audio_vis_frag,
   audio_vis_ver,
@@ -10,22 +11,33 @@ import {
   dissolve_ver,
   plumbus_frag,
   plumbus_ver,
+  vibrant_frag,
+  vibrant_ver,
 } from "@samoz/glsl";
 
-export const SceneData = [
+type GlslData = {
+  vertexShader: string;
+  fragmentShader: string;
+};
+
+export const SceneData: {
+  path: string;
+  title: string;
+  isDev?: boolean;
+  comp: ({ glsl, props }: { glsl: GlslData; props?: any }) => JSX.Element;
+  glsl: GlslData;
+}[] = [
   {
-    key: "DancerScene",
-    value: "Dancer Scene",
+    path: "DancerScene",
+    title: "Dancer Scene",
     comp: DancerScene,
-    path: "dancer-scene",
     glsl: {
       vertexShader: dissolve_ver,
       fragmentShader: dissolve_frag,
     },
   },
   {
-    key: "PlumbusSphere",
-    value: "Plumbus Sphere",
+    title: "Plumbus Sphere",
     comp: PlumbusSphere,
     path: "PlumbusSphere",
     glsl: {
@@ -34,23 +46,21 @@ export const SceneData = [
     },
   },
   {
-    key: "AudioVisualizer",
-    value: "Audio Visualizer",
+    title: "Audio Visualizer",
     comp: AudioVis,
-    path: "AudioVisualizer",
+    path: "audio_vis",
     glsl: {
       vertexShader: audio_vis_ver,
       fragmentShader: audio_vis_frag,
     },
   },
-  // {
-  //   key: "AudioVisualizer_2",
-  //   value: "Audio Visualizer 2",
-  //   comp: AudioVis_2,
-  //   path: "AudioVisualizer2",
-  //   glsl: {
-  //     vertexShader: audio_vis_ver_3,
-  //     fragmentShader: audio_vis_frag_3,
-  //   },
-  // },
+  {
+    title: "Golden Goat",
+    comp: GoatScene,
+    path: "golden_goat",
+    glsl: {
+      vertexShader: vibrant_ver,
+      fragmentShader: vibrant_frag,
+    },
+  },
 ];

@@ -26,7 +26,7 @@ export const GlowingDiv = ({
   return (
     <div
       ref={ref}
-      className={`card h-full cursor-wait flex items-center justify-center ${
+      className={`card h-full w-full cursor-wait flex items-center justify-center ${
         className || ""
       }`}
     >

@@ -29,7 +29,7 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const audioOptions = ["Best Time", "Electro", "Satara"];
+const audioOptions = ["Best Time", "Electra", "Satar"];
 
 const AudioControllers = (
   {
@@ -41,7 +41,6 @@ const AudioControllers = (
 ) => {
   const [file, setFile] = useState("");
   const [version, setVersion] = useState(1);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(-1);
 
   useImperativeHandle(
@@ -53,30 +52,25 @@ const AudioControllers = (
       stop: () => sound.current?.stop(),
       play: () => sound.current?.play(),
     }),
-    [version]
+    []
   );
 
   const listener = useRef(new AudioListener());
   const sound = useRef<Audio>();
   const loader = useRef(new AudioLoader());
   const analyser = useRef<AudioAnalyser>();
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const toggle = () => {
-    const isPlaying = sound.current?.isPlaying ?? false;
+    if (!sound.current) return;
+    const isPlaying = sound.current?.isPlaying || false;
+    isPlaying ? sound.current?.pause() : sound.current?.play();
     setIsPlaying(!isPlaying);
   };
 
   const toggleVersion = () => {
     setVersion((ver) => (ver === 1 ? 2 : 1));
   };
-
-  useEffect(() => {
-    if (isPlaying) {
-      sound.current?.play();
-    } else {
-      sound.current?.pause();
-    }
-  }, [isPlaying]);
 
   useEffect(() => {
     onVersionChanged && onVersionChanged(version);
@@ -94,8 +88,8 @@ const AudioControllers = (
         sound.current?.setBuffer(buffer);
         sound.current?.setLoop(true);
         sound.current?.setVolume(0.1);
+        sound.current?.play();
         setProgress(-1);
-        setIsPlaying(true);
       },
       (pr) => {
         setProgress(pr.loaded / pr.total);
@@ -136,21 +130,22 @@ const AudioControllers = (
         />
       </StaticButton>
 
-      <StaticButton
-        //@ts-ignore
-        component="label"
-        variant="contained"
-        endIcon={isPlaying ? <PauseIcon /> : <PlayIcon />}
-        onClick={toggle}
-      >
-        {isPlaying ? "Pause" : "Play"}
-      </StaticButton>
+      {!!file && (
+        <StaticButton
+          //@ts-ignore
+          component="label"
+          variant="contained"
+          endIcon={isPlaying ? <PauseIcon /> : <PlayIcon />}
+          onClick={toggle}
+        >
+          {isPlaying ? "Pause" : "Play"}
+        </StaticButton>
+      )}
 
       <StaticButton
         //@ts-ignore
         component="label"
         variant="contained"
-        endIcon={isPlaying ? <PauseIcon /> : <PlayIcon />}
         onClick={toggleVersion}
       >
         {`toggle version :${version}`}
