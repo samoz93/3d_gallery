@@ -4,11 +4,11 @@ import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Loader } from "@samoz/app/components/Loader";
 import { folder, useControls } from "leva";
-import { ReactNode, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
+import { CanvasContext } from "../stores/CanvasContext";
 
 export const ThreeCanvas = ({
   children,
-  bloom,
 }: {
   children: ReactNode;
   bloom?: {
@@ -19,14 +19,20 @@ export const ThreeCanvas = ({
   };
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const { bloom } = useContext(CanvasContext);
+
   const { intensity, smoothing, threshold, disable } = useControls(
     "Main Scene",
     {
       bloom: folder({
-        intensity: { value: bloom?.intensity || 1.1, min: 0, max: 10 },
-        threshold: { value: bloom?.threshold || 0.4, min: 0, max: 1 },
-        smoothing: { value: bloom?.smoothing || 0.1, min: 0, max: 1 },
-        disable: !!bloom?.disable,
+        intensity: {
+          value: bloom.intensity,
+          min: 0,
+          max: 10,
+        },
+        threshold: { value: bloom.threshold || 0.4, min: 0, max: 1 },
+        smoothing: { value: bloom.smoothing || 0.1, min: 0, max: 1 },
+        disable: !!bloom.disable,
       }),
     }
   );

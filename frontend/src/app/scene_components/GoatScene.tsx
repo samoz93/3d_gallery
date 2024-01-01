@@ -37,8 +37,9 @@ export const GoatScene = ({
   const ref = useRef<Group<any>>(null);
 
   useFrame(({ clock }) => {
-    ref.current!.rotation.y += clock.getElapsedTime() * 0.0001;
+    ref.current!.rotation.y += clock.getElapsedTime() * 0.00001;
   });
+
   return (
     <UniformUpdater materials={[material]}>
       <group ref={ref} scale={2}>

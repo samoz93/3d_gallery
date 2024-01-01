@@ -1,7 +1,7 @@
 import {
-  AudioVis,
+  AudioVisScene,
   DancerScene,
-  PlumbusSphere,
+  PlumbusSphereScene,
 } from "@samoz/app/scene_components";
 import { GoatScene } from "@samoz/app/scene_components/GoatScene";
 import {
@@ -38,7 +38,7 @@ export const SceneData: {
   },
   {
     title: "Plumbus Sphere",
-    comp: PlumbusSphere,
+    comp: PlumbusSphereScene,
     path: "PlumbusSphere",
     glsl: {
       vertexShader: plumbus_ver,
@@ -47,7 +47,7 @@ export const SceneData: {
   },
   {
     title: "Audio Visualizer",
-    comp: AudioVis,
+    comp: AudioVisScene,
     path: "audio_vis",
     glsl: {
       vertexShader: audio_vis_ver,

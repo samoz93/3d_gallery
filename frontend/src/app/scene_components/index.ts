@@ -1,4 +1,4 @@
-export * from "./AudioVis";
-export * from "./AudioVis_2";
+export * from "./AudioVisScene";
+export * from "./AudioVis_2Scene";
 export * from "./DancerScene";
-export * from "./PlumbusSphere";
+export * from "./PlumbusSphereScene";

@@ -16,7 +16,7 @@ import {
 } from "three";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 
-export const AudioVis = ({
+export const AudioVisScene = ({
   glsl,
 }: {
   children?: React.ReactNode;

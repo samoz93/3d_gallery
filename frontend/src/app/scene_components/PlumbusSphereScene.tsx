@@ -9,7 +9,7 @@ import {
 } from "three";
 import CustomShaderMaterial from "three-custom-shader-material/vanilla";
 
-export const PlumbusSphere = ({
+export const PlumbusSphereScene = ({
   glsl,
 }: {
   children?: React.ReactNode;

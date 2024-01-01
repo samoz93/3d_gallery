@@ -10,8 +10,8 @@ import dissolve_ver from "./dissolve_vertix.glsl";
 import plumbus_frag from "./plumbus_frag.glsl";
 import plumbus_ver from "./plumbus_ver.glsl";
 
-import vibrant_frag from "./Vibrant_frag.glsl";
-import vibrant_ver from "./Vibrant_ver.glsl";
+import vibrant_frag from "./vibrant_frag.glsl";
+import vibrant_ver from "./vibrant_ver.glsl";
 
 export {
   audio_vis_2_frag,
