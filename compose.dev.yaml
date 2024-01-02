@@ -31,45 +31,45 @@ services:
     networks:
       - my_network
 
-  # api:
-  #   container_name: api
-  #   build:
-  #     context: ./api
-  #     target: development
-  #   volumes:
-  #     - ./api:/usr/src/app
-  #     - ./api/node_modules:/usr/src/app/node_modules
-  #   ports:
-  #     - 3001:3000
-  #   command: npm run start:dev
-  #   env_file:
-  #     - ./frontend/.env
-  #   networks:
-  #     - my_network
-  #   depends_on:
-  #     - redis
-  #     - mongo
+  api:
+    container_name: api
+    build:
+      context: ./api
+      target: development
+    volumes:
+      - ./api:/usr/src/app
+      - ./api/node_modules:/usr/src/app/node_modules
+    ports:
+      - 3001:3000
+    command: npm run start:dev
+    env_file:
+      - ./frontend/.env
+    networks:
+      - my_network
+    depends_on:
+      - redis
+      - mongo
 
-  # redis:
-  #   container_name: redis
-  #   image: redis:5
-  #   networks:
-  #     - my_network
+  redis:
+    container_name: redis
+    image: redis:5
+    networks:
+      - my_network
 
-  # mongo:
-  #   container_name: mongo
-  #   image: mongo
-  #   restart: always
-  #   environment:
-  #     AUTH: yes
-  #     MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
-  #     MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
-  #   ports:
-  #     - 27017:27017
-  #   volumes:
-  #     - mongo_vol:/data/db
-  #   networks:
-  #     - my_network
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    environment:
+      AUTH: yes
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_vol:/data/db
+    networks:
+      - my_network
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

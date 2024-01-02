@@ -4,6 +4,7 @@ import {
   PlumbusSphereScene,
 } from "@samoz/app/scene_components";
 import { GoatScene } from "@samoz/app/scene_components/GoatScene";
+import { UFOScene } from "@samoz/app/scene_components/UFOScene";
 import {
   audio_vis_frag,
   audio_vis_ver,
@@ -58,6 +59,15 @@ export const SceneData: {
     title: "Golden Goat",
     comp: GoatScene,
     path: "golden_goat",
+    glsl: {
+      vertexShader: vibrant_ver,
+      fragmentShader: vibrant_frag,
+    },
+  },
+  {
+    title: "UFO Wow",
+    comp: UFOScene,
+    path: "ufo_scene",
     glsl: {
       vertexShader: vibrant_ver,
       fragmentShader: vibrant_frag,
