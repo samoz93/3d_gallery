@@ -1,0 +1,171 @@
+.card {
+  --br-width: 10px;
+  --angle: 120;
+  --spread: 80;
+  --blur: 30;
+  position: relative;
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  cursor: pointer;
+  padding: 5px;
+  border: rgba(255, 255, 255, 0.09) 2px solid;
+
+  &::after,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: calc(100% + var(--br-width));
+    width: calc(100% + var(--br-width));
+    transform: translate(
+      calc(var(--br-width) * -0.5),
+      calc(var(--br-width) * -0.5)
+    );
+    padding: 10px;
+    mask-composite: intersect;
+    mask-clip: padding-box, border-box;
+    background: conic-gradient(
+      from 180deg at 50% 70%,
+      hsla(0, 0%, 98%, 1) 0deg,
+      #eec32d 72.0000010728836deg,
+      #ec4b4b 144.0000021457672deg,
+      #709ab9 216.00000858306885deg,
+      #4dffbf 288.0000042915344deg,
+      hsla(0, 0%, 98%, 1) 1turn
+    );
+    background-attachment: fixed;
+    mask: linear-gradient(#0000, #0000),
+      conic-gradient(
+        from calc((var(--angle) - var(--spread) * 0.5) * 1deg),
+        #0000,
+        #fff,
+        #0000 calc(var(--spread) * 1deg)
+      );
+    filter: blur(calc(var(--blur) * 1px));
+    backdrop-filter: blur(calc(var(--blur) * 1px));
+    opacity: 0.8;
+    transition: all 2s;
+  }
+}
+
+.file-input {
+  color: transparent;
+  height: 100%;
+}
+.file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.file-input::before {
+  content: var(--text, "Upload audio");
+  color: white;
+  display: block;
+  text-align: center;
+  right: 1%;
+  top: 50%;
+  transform: translateY(20%);
+  cursor: pointer;
+}
+
+.file-input::after {
+  content: "📄";
+  color: white;
+  position: absolute;
+  right: 1%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.file-input:hover::before {
+  border-color: black;
+}
+.file-input:active {
+  outline: 0;
+}
+
+.input_sizing {
+  padding: 2%;
+  width: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+}
+
+.loader {
+  transform: rotateZ(45deg);
+  perspective: 1000px;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  color: #fff;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+  transform: rotateX(70deg);
+  animation: 1s spin linear infinite;
+}
+.loader:after {
+  color: #ff3d00;
+  transform: rotateY(70deg);
+  animation-delay: 0.4s;
+}
+
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotateZ(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateZ(360deg);
+  }
+}
+
+@keyframes rotateccw {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes spin {
+  0%,
+  100% {
+    box-shadow: 0.2em 0px 0 0px currentcolor;
+  }
+  12% {
+    box-shadow: 0.2em 0.2em 0 0 currentcolor;
+  }
+  25% {
+    box-shadow: 0 0.2em 0 0px currentcolor;
+  }
+  37% {
+    box-shadow: -0.2em 0.2em 0 0 currentcolor;
+  }
+  50% {
+    box-shadow: -0.2em 0 0 0 currentcolor;
+  }
+  62% {
+    box-shadow: -0.2em -0.2em 0 0 currentcolor;
+  }
+  75% {
+    box-shadow: 0px -0.2em 0 0 currentcolor;
+  }
+  87% {
+    box-shadow: 0.2em -0.2em 0 0 currentcolor;
+  }
+}
