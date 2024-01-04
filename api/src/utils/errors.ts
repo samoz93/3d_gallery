@@ -51,7 +51,7 @@ export class SamozValidationError extends SamozError<'validation'> {
 
 type AuthErrorTypes = 'loginError' | 'alreadyExist' | 'unauthorized';
 export class AuthErrors extends SamozError<AuthErrorTypes> {
-  constructor(type: AuthErrorTypes, error: Error) {
+  constructor(type: AuthErrorTypes, error?: Error) {
     super(type, error);
   }
   get message(): string {

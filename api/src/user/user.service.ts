@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { UserModel } from '@samoz/schemas';
+import { InjectModel } from '@nestjs/mongoose';
 import { AuthErrors, DbErrors, _ } from '@samoz/utils';
 import { IDoc, IUser } from '@types';
 import to from 'await-to-js';
+import { Model } from 'mongoose';
+import { User } from './user.schema';
 
 @Injectable()
 export class UserService {
-  constructor(private jwtService: JwtService) {}
+  constructor(@InjectModel(User.name) private UserModel: Model<User>) {}
 
   userExists = async (email: string) => {
-    const [err, data] = await to(UserModel.findOne({ email }).exec());
+    const [err, data] = await to(this.UserModel.findOne({ email }).exec());
     if (err) {
       throw new DbErrors('read', err);
     }
@@ -21,14 +22,28 @@ export class UserService {
     const exists = await this.userExists(user.email);
 
     if (exists) {
-      throw new AuthErrors('alreadyExist', new Error('User Already Exists'));
+      throw new AuthErrors('alreadyExist');
     }
 
-    const [err, data] = await to<IDoc<IUser>>(new UserModel(user).save());
+    const [err, data] = await to<IDoc<IUser>>(new this.UserModel(user).save());
     if (err) {
       throw new DbErrors('save', err);
     }
 
     return _.omit(data.toObject<IUser>(), ['password']);
+  }
+
+  async getUserByEmail(
+    email: string,
+    includePassword = false,
+  ): Promise<IUser | null> {
+    const [err, data] = await to(this.UserModel.findOne({ email }).exec());
+    if (err) {
+      throw new DbErrors('read', err);
+    }
+
+    return includePassword
+      ? data?.toObject<IUser>()
+      : _.omit(data?.toObject<IUser>(), ['password']);
   }
 }

@@ -1,12 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseInterceptors } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserModel } from '@samoz/schemas';
+import { config } from '@samoz/config/constant';
 import { UserService } from '@samoz/user/user.service';
 import { AuthErrors, DbErrors } from '@samoz/utils';
 import { IUser } from '@types';
 import to from 'await-to-js';
-import * as simplecrypt from 'simplecrypt';
+import * as bcrypt from 'bcryptjs';
 import { _ } from 'src/utils';
+import { AuthInterceptor } from './auth.interceptor';
 @Injectable()
 export class AuthService {
   constructor(
@@ -14,12 +15,8 @@ export class AuthService {
     private userService: UserService,
   ) {}
 
-  private sc = simplecrypt({
-    salt: process.env.SALT_ROUNDS || 'SAMOZ@TECH',
-  });
-
   async hashPassword(password: string): Promise<string> {
-    return this.sc.encrypt(password);
+    return bcrypt.hashSync(password, config.auth.salt);
   }
 
   async register(user: IUser) {
@@ -32,21 +29,21 @@ export class AuthService {
     return userPayload;
   }
 
+  @UseInterceptors(new AuthInterceptor())
   async login({ email, password }): Promise<Partial<IUser>> {
-    const hashedPassword = await this.hashPassword(password);
-    const [err, data] = await to(
-      UserModel.findOne({ email, password: hashedPassword }).exec(),
-    );
+    const [err, data] = await to(this.userService.getUserByEmail(email, true));
 
     if (err) {
       throw new DbErrors('read', err);
     }
 
-    if (!data) {
+    const compare = await bcrypt.compare(password, data?.password);
+
+    if (!compare) {
       throw new AuthErrors('loginError', new Error('Invalid Credentials'));
     }
 
-    const userPayload = _.omit(data.toObject<IUser>(), ['password']);
+    const userPayload = _.omit(data, ['password']);
     userPayload.token = this.getJwt(data);
     return userPayload;
   }

@@ -1,6 +1,6 @@
 export const config = {
   auth: {
-    salt: process.env.SALT_ROUNDS || 'SAMOZ@TECH',
+    salt: process.env.SALT_ROUNDS || 10,
     jwtSecret: process.env.JWT_SECRET || 'SAMOZ@TECH',
   },
   db: {
