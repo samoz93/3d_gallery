@@ -68,6 +68,7 @@ export const SceneData: {
     title: "UFO Wow",
     comp: UFOScene,
     path: "ufo_scene",
+    isDev: true,
     glsl: {
       vertexShader: vibrant_ver,
       fragmentShader: vibrant_frag,
