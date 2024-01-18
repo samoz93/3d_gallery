@@ -49,12 +49,6 @@ services:
       - redis
       - mongo
 
-  redis:
-    container_name: redis
-    image: redis:5
-    networks:
-      - my_network
-
   mongo:
     container_name: mongo
     image: mongo
