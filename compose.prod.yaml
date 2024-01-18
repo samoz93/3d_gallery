@@ -10,56 +10,80 @@
 services:
   front-end:
     build:
-      context: ./
+      context: ./frontend
       target: runner
-      dockerfile: ./Dockerfile_fe
-    container_name: 3d_gallery_FE
+    container_name: samoz
+    environment:
+      ENV_VARIABLE: ${ENV_VARIABLE}
+      NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+      NODE_ENV: ${NODE_ENV}
+    env_file:
+      - .env
     ports:
-      - 80:3000
-      - 443:3000
-      - 3000:3000
+      - ${FRONT_PORT}:${FRONT_PORT}
     restart: always
+    command: yarn --cwd ./frontend dev -p ${FRONT_PORT}
+    volumes:
+      - ./frontend/src:/frontend/src
+      - ./frontend/public:/frontend/public
+      - ./frontend/node_modules:/frontend/node_modules
     networks:
       - my_network
 
-  # api:
-  #   container_name: api
-  #   build:
-  #     context: ./api
-  #     target: production
-  #   volumes:
-  #     - ./api:/usr/src/app
-  #     - ./api/node_modules:/usr/src/app/node_modules
-  #   ports:
-  #     - 3001:3000
-  #   # command: npm run start:dev
-  #   env_file:
-  #     - ./frontend/.env
-  #   networks:
-  #     - my_network
-  #   depends_on:
-  #     - redis
-  #     - mongo
+  api:
+    container_name: api
+    build:
+      context: ./api
+      target: production
+    volumes:
+      - ./api:/api
+      - ./api/node_modules:/api/node_modules
+    ports:
+      - ${API_PORT}:${API_PORT}
+    command: npm run start:dev
+    env_file:
+      - .env
+    networks:
+      - my_network
+    depends_on:
+      - redis
+      - mongo
 
-  # redis:
-  #   container_name: redis
-  #   image: redis:5
-  #   networks:
-  #     - my_network
+  redis:
+    container_name: redis
+    image: redis:5
+    networks:
+      - my_network
 
-  # mongo:
-  #   container_name: mongo
-  #   image: mongo
-  #   restart: always
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
-  #     MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
-  #   ports:
-  #     - 27017:27017
-  #   volumes:
-  #     - mongo_vol:/data/db
-  #   networks:
-  #     - my_network
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    environment:
+      AUTH: yes
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_vol:/data/db
+    networks:
+      - my_network
+
+  nginx:
+    build:
+      context: nginx
+    container_name: nginx
+    restart: always
+    tty: true
+    ports:
+      - "8000:80"
+      - "80:80"
+    networks:
+      - my_network
+    depends_on:
+      - api
+      - front-end
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
@@ -96,6 +120,7 @@ services:
 
 networks:
   my_network:
-    external: true
+    driver: bridge
+
 volumes:
   mongo_vol:

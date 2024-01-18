@@ -1,10 +1,10 @@
 "use client";
 
+import { IAudioRef } from "@common";
 import { Html } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { UniformUpdater } from "@samoz/app/3d_components/UniformUpdater";
 import { AudioComps } from "@samoz/app/components/AudioControllers";
-import { IAudioRef } from "@types";
 import { useControls } from "leva";
 import { useEffect, useMemo, useRef } from "react";
 import {

@@ -1,6 +1,6 @@
+import { ILoginPayload, IRegistrationPayload } from '@common/index';
 import { Body, Controller, Post } from '@nestjs/common';
 import { Public } from '@samoz/utils/auth.roles';
-import { ILoginPayload, IRegistrationPayload } from '../../types';
 import { AuthService } from './auth.service';
 
 @Controller('auth')

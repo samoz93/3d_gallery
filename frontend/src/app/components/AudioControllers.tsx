@@ -1,10 +1,10 @@
 "use client";
 
+import { IAudioRef } from "@common";
 import PauseIcon from "@mui/icons-material/Pause";
 import PlayIcon from "@mui/icons-material/PlayCircle";
 import UploadIcon from "@mui/icons-material/Upload";
 import { styled } from "@mui/material/styles";
-import { IAudioRef } from "@types";
 import {
   Ref,
   forwardRef,

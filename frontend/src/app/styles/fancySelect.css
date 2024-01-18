@@ -1,0 +1,30 @@
+.fancy_selector_container {
+  height: 3rem;
+  width: 15rem;
+  background: green;
+  position: relative;
+}
+.fancy_selector_item {
+  z-index: 1;
+  width: 100%;
+  display: grid;
+  place-items: center;
+  height: 100%;
+}
+.fancy_selector_options {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3rem;
+  width: 100%;
+  height: 0;
+  z-index: -1;
+  transition: all 0.1s ease-in-out;
+  transform-origin: middle;
+}
+.fancy_selector_options.open {
+  transform-origin: middle;
+  height: 100%;
+  background: blue;
+  transform: translateY(calc(var(--item-count) * -100%));
+}/*# sourceMappingURL=fancySelect.css.map */

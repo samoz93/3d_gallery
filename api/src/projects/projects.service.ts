@@ -1,7 +1,7 @@
+import { IProject } from '@common/index';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { DbErrors } from '@samoz/utils';
-import { IProject } from '@types';
 import to from 'await-to-js';
 import { Model } from 'mongoose';
 import { Project } from './projects.schema';

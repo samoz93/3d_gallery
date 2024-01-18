@@ -1,6 +1,6 @@
+import { IProject } from '@common/index';
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { DbErrors } from '@samoz/utils';
-import { IProject } from '@types';
 import to from 'await-to-js';
 import { ProjectsService } from './projects.service';
 
@@ -9,8 +9,8 @@ export class ProjectsController {
   constructor(private service: ProjectsService) {}
 
   @Get()
-  getProjects() {
-    return this.service.getProjects();
+  async getProjects() {
+    return { data: await this.service.getProjects() };
   }
 
   @Post()

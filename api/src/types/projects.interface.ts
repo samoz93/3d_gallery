@@ -1,5 +1,3 @@
-import { Document } from 'mongoose';
-
 export interface IProject {
   projectName: string;
   comp: string;
@@ -9,5 +7,3 @@ export interface IProject {
     fragmentShader: string;
   };
 }
-
-export type IDoc<T> = T & Document;

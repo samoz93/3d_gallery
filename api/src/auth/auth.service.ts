@@ -1,13 +1,14 @@
-import { Injectable, UseInterceptors } from '@nestjs/common';
+import { IUser } from '@common/index';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { config } from '@samoz/config/constant';
+import { UserRole } from '@samoz/user/user.schema';
 import { UserService } from '@samoz/user/user.service';
 import { AuthErrors, DbErrors } from '@samoz/utils';
-import { IUser } from '@types';
 import to from 'await-to-js';
 import * as bcrypt from 'bcryptjs';
 import { _ } from 'src/utils';
-import { AuthInterceptor } from './auth.interceptor';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -29,7 +30,6 @@ export class AuthService {
     return userPayload;
   }
 
-  @UseInterceptors(new AuthInterceptor())
   async login({ email, password }): Promise<Partial<IUser>> {
     const [err, data] = await to(this.userService.getUserByEmail(email, true));
 
@@ -53,6 +53,7 @@ export class AuthService {
       email: user.email,
       _id: user._id,
       name: user.userName,
+      role: user.role || UserRole.USER,
     });
   };
 }

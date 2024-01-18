@@ -1,7 +1,7 @@
+import { IUser } from '@common/index';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { AuthErrors, DbErrors, _ } from '@samoz/utils';
-import { IDoc, IUser } from '@types';
 import to from 'await-to-js';
 import { Model } from 'mongoose';
 import { User } from './user.schema';
@@ -25,7 +25,7 @@ export class UserService {
       throw new AuthErrors('alreadyExist');
     }
 
-    const [err, data] = await to<IDoc<IUser>>(new this.UserModel(user).save());
+    const [err, data] = await to(new this.UserModel(user).save());
     if (err) {
       throw new DbErrors('save', err);
     }

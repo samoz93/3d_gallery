@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { config } from '@samoz/config/constant';
 import { UserModule } from '@samoz/user/user.module';
 import { AuthController } from './auth.controller';
+import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
 
 @Module({
@@ -15,6 +16,6 @@ import { AuthService } from './auth.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, AuthResolver],
 })
 export class AuthModule {}

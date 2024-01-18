@@ -10,20 +10,19 @@
 services:
   front-end:
     build:
-      context: .
+      context: ./frontend
       target: dev
-      dockerfile: ./Dockerfile_fe
     container_name: samoz
     environment:
       ENV_VARIABLE: ${ENV_VARIABLE}
       NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
       NODE_ENV: ${NODE_ENV}
     env_file:
-      - ./frontend/.env
+      - .env
     ports:
-      - 3000:3000
+      - ${FRONT_PORT}:${FRONT_PORT}
     restart: always
-    command: yarn --cwd ./frontend dev
+    command: yarn --cwd ./frontend dev -p ${FRONT_PORT}
     volumes:
       - ./frontend/src:/frontend/src
       - ./frontend/public:/frontend/public
@@ -37,10 +36,10 @@ services:
       context: ./api
       target: development
     volumes:
-      - ./api:/usr/src/app
-      - ./api/node_modules:/usr/src/app/node_modules
+      - ./api:/api
+      - ./api/node_modules:/api/node_modules
     ports:
-      - 3001:3000
+      - ${API_PORT}:${API_PORT}
     command: npm run start:dev
     env_file:
       - .env
@@ -70,6 +69,20 @@ services:
       - mongo_vol:/data/db
     networks:
       - my_network
+
+  nginx:
+    build:
+      context: nginx
+    container_name: nginx
+    restart: always
+    tty: true
+    ports:
+      - "8000:80"
+    networks:
+      - my_network
+    depends_on:
+      - api
+      - front-end
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
@@ -106,6 +119,7 @@ services:
 
 networks:
   my_network:
-    external: true
+    driver: bridge
+
 volumes:
   mongo_vol:

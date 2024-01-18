@@ -1,14 +1,7 @@
 import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { Request } from 'express';
 import { IProject } from './projects.interface';
-
-export interface IUser {
-  _id?: string;
-  userName: string;
-  email: string;
-  password: string;
-  projects: IProject[];
-  token?: string;
-}
+import { IUser } from './user.types';
 
 export class IRegistrationPayload implements IUser {
   @IsString()
@@ -27,3 +20,5 @@ export class ILoginPayload implements Partial<IUser> {
   @IsString()
   password: string;
 }
+
+export type SamozRequest = Request & { user?: IUser };
