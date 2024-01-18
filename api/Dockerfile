@@ -5,14 +5,20 @@ RUN apk add --no-cache bash
 
 WORKDIR /api
 
-COPY ./package*.json ./
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 COPY ./tsconfig*.json ./
 
-RUN npm install
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+  
 
 COPY . .
 
-RUN npm run build
+RUN pnpm run build
 
 FROM node:18-alpine as production
 
@@ -24,7 +30,7 @@ WORKDIR /api
 COPY ./package*.json .
 COPY ./package*.json .
 
-RUN npm install
+RUN pnpm install
 
 COPY . .
 
