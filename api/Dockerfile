@@ -30,7 +30,7 @@ WORKDIR /api
 COPY ./package*.json .
 COPY ./package*.json .
 
-RUN pnpm install
+RUN yarn global add pnpm && pnpm install
 
 COPY . .
 
