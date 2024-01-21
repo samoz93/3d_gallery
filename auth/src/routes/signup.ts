@@ -1,9 +1,8 @@
 import { Router } from "express";
-import { body, validationResult } from "express-validator";
-import jwt from "jsonwebtoken";
-import { CONFIG } from "../config";
+import { body } from "express-validator";
+import { validateRequest } from "../middlewares";
 import { createUser, isUserExist } from "../services";
-import { MyValidationError, UserExists } from "../types";
+import { UserExists } from "../types";
 const route = Router();
 
 route.post(
@@ -20,13 +19,8 @@ route.post(
     }
     return true;
   }),
-
+  validateRequest,
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw new MyValidationError(errors);
-    }
-
     const { email, password } = req.body;
     const userExists = await isUserExist(email);
 
@@ -35,11 +29,10 @@ route.post(
     }
 
     const user = await createUser(email, password);
-
-    const userJwt = jwt.sign(user, CONFIG.JWT_KEY);
+    const jwt = user.generateJWT();
     req.session = {
       ...req.session,
-      jwt: userJwt,
+      jwt,
     };
     return res.status(201).send({
       data: user,

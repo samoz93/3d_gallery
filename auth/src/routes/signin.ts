@@ -1,6 +1,8 @@
 import { Request, Response, Router } from "express";
-import { body, validationResult } from "express-validator";
-import { MyValidationError } from "../types";
+import { body } from "express-validator";
+import { validateRequest } from "../middlewares";
+import { getUserByEmail } from "../services";
+import { AuthErrors } from "../types";
 const route = Router();
 
 route.post(
@@ -11,15 +13,29 @@ route.post(
     .isLength({ min: 4, max: 20 })
     .trim()
     .withMessage("Must Have a password"),
-  (req: Request, res: Response, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw new MyValidationError(errors);
-    }
+  validateRequest,
+  async (req: Request, res: Response, next) => {
     // console.log(email, password);
     const { email, password } = req.body;
+    const user = await getUserByEmail(email);
 
-    res.send({ email, password });
+    if (!user) {
+      throw new AuthErrors();
+    }
+
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      throw new AuthErrors();
+    }
+    const jwt = user.generateJWT();
+    req.session = {
+      ...req.session,
+      jwt,
+    };
+
+    return res.status(200).send({
+      data: user,
+    });
   }
 );
 

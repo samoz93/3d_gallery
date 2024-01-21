@@ -1,7 +1,6 @@
 import to from "await-to-js";
 import { UserModel } from "../models";
 import { DBError } from "../types";
-import { _ } from "../utils";
 
 export const isUserExist = async (email: string) => {
   const [err, user] = await to(UserModel.findOne({ email }));
@@ -11,6 +10,14 @@ export const isUserExist = async (email: string) => {
   return !!user;
 };
 
+export const getUserByEmail = async (email: string) => {
+  const [err, user] = await to(UserModel.findOne({ email }).exec());
+  if (err) {
+    throw new DBError(err);
+  }
+
+  return user;
+};
 export const createUser = async (email: string, password: string) => {
   const [err, user] = await to(
     UserModel.create({
@@ -23,5 +30,5 @@ export const createUser = async (email: string, password: string) => {
     throw new DBError(err);
   }
 
-  return _.omit(user.toJSON(), ["password"]);
+  return user.toJSON();
 };

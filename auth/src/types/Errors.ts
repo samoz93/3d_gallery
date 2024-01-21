@@ -65,3 +65,15 @@ export class UserExists extends MyError {
     return { message: "User already exists", fields: ["email"] };
   }
 }
+
+export class AuthErrors extends MyError {
+  statusCode = 401;
+
+  constructor() {
+    super("Not Authorized");
+  }
+
+  serializeErrors() {
+    return { message: "Not Authorized", reason: "Invalid Credentials" };
+  }
+}
