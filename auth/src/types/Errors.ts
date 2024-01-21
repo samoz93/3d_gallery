@@ -68,12 +68,16 @@ export class UserExists extends MyError {
 
 export class AuthErrors extends MyError {
   statusCode = 401;
-
+  reason = "Invalid Credentials";
   constructor() {
     super("Not Authorized");
   }
 
   serializeErrors() {
-    return { message: "Not Authorized", reason: "Invalid Credentials" };
+    return { message: "Not Authorized", reason: [this.reason] };
   }
+}
+
+export class NotAuthorized extends AuthErrors {
+  reason = "Not Authorized";
 }

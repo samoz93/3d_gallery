@@ -1,20 +1,23 @@
 import to from "await-to-js";
 import cookieSession from "cookie-session";
-import express, { json } from "express";
+import express, { RequestHandler, json } from "express";
 import "express-async-errors";
 import mongoose from "mongoose";
 import { CONFIG } from "./config";
+import { currentUser } from "./lib";
 import { errorHandler } from "./middlewares";
 import { signinRoute, signoutRoute, signupRoute, usersRoute } from "./routes";
 import { NotFoundError } from "./types";
+
 const routes = [usersRoute, signinRoute, signoutRoute, signupRoute];
 
-const middleWares = [
+const middleWares: RequestHandler[] = [
   json(),
   cookieSession({
     signed: false,
     secure: true,
   }),
+  currentUser,
 ];
 
 const app = express();
@@ -22,10 +25,6 @@ app.set("trust proxy", true);
 
 // Apply middleWares
 middleWares.forEach((middleWare) => app.use(middleWare));
-
-app.use((req, res, next) => {
-  next();
-});
 
 // Setup routes
 routes.forEach((route) => app.use(route));

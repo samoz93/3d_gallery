@@ -21,7 +21,7 @@ export class PasswordService {
     return buff.toString("hex") === hashed;
   }
 
-  static DecodeJWT(token: string): User {
+  static decodeJWT(token: string): User {
     const payload = jwt.verify(token, CONFIG.JWT_KEY) as User;
     return payload;
   }

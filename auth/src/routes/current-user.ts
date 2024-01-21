@@ -1,20 +1,11 @@
 import { Router } from "express";
-import { PasswordService } from "../services/password.service";
-import { _ } from "../utils";
+import { currentUser } from "../lib";
 
 const route = Router();
 
-route.get("/api/users/currentuser", (req, res) => {
-  const { jwt } = req.session || {};
-
-  if (_.isEmpty(jwt)) {
-    return res.status(200).send({
-      data: null,
-    });
-  }
-
+route.get("/api/users/currentuser", currentUser, (req, res) => {
   res.send({
-    data: PasswordService.DecodeJWT(jwt),
+    data: req.user,
   });
 });
 

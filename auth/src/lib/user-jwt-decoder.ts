@@ -1,16 +1,29 @@
-import { Request, Response } from "express";
-import { UserModel } from "../models";
+import { NextFunction, Request, Response } from "express";
+import { User } from "../models";
+import { PasswordService } from "../services/password.service";
 
-export const UserJwtDecoder = (req: Request, res: Response) => {
+declare global {
+  namespace Express {
+    interface Request {
+      user?: User;
+    }
+  }
+}
+
+export const currentUser = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { jwt } = req.session || {};
 
-  if (_.isEmpty(jwt)) {
-    return res.status(200).send({
-      data: null,
-    });
+  if (!jwt) {
+    next();
   }
 
-  res.send({
-    data: UserModel.decodeJWT(jwt),
-  });
+  try {
+    req.user = PasswordService.decodeJWT(jwt) || null;
+  } catch (error) {}
+
+  next();
 };
