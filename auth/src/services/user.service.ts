@@ -30,5 +30,5 @@ export const createUser = async (email: string, password: string) => {
     throw new DBError(err);
   }
 
-  return user.toJSON();
+  return user;
 };

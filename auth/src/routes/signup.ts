@@ -29,13 +29,14 @@ route.post(
     }
 
     const user = await createUser(email, password);
+
     const jwt = user.generateJWT();
     req.session = {
       ...req.session,
       jwt,
     };
     return res.status(201).send({
-      data: user,
+      data: user.toJSON(),
     });
   }
 );

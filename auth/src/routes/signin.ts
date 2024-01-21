@@ -14,7 +14,7 @@ route.post(
     .trim()
     .withMessage("Must Have a password"),
   validateRequest,
-  async (req: Request, res: Response, next) => {
+  async (req: Request, res: Response) => {
     // console.log(email, password);
     const { email, password } = req.body;
     const user = await getUserByEmail(email);
