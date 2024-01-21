@@ -1,6 +1,4 @@
-import jwt from "jsonwebtoken";
 import { Model, Schema, model } from "mongoose";
-import { CONFIG } from "../config";
 import { PasswordService } from "../services/password.service";
 
 // interface UserModel extends Model {}
@@ -9,13 +7,12 @@ export interface User {
   email: string;
   password: string;
   comparePassword: (password: string) => Promise<boolean>;
-  generateJWT: () => string;
 }
 
-export interface UserDocument extends Document, User {}
-interface UserModel extends Model<UserDocument> {
-  decodeJWT: (token: string) => Promise<any>;
+export interface UserDocument extends Document, User {
+  id: string;
 }
+interface UserModel extends Model<UserDocument> {}
 
 const schema = new Schema(
   {
@@ -51,20 +48,6 @@ schema.pre("save", async function (next) {
 
 schema.methods.comparePassword = async function (password: string) {
   return await PasswordService.comparePassword(this.password, password);
-};
-
-schema.methods.generateJWT = async function () {
-  return jwt.sign(
-    {
-      id: this.id,
-      email: this.email,
-    },
-    CONFIG.JWT_KEY
-  );
-};
-
-schema.statics.decodeJWT = async function (token: string) {
-  return jwt.verify(token, CONFIG.JWT_KEY);
 };
 
 export const UserModel = model<UserDocument, UserModel>("User", schema);

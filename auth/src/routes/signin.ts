@@ -1,18 +1,13 @@
 import { Request, Response, Router } from "express";
-import { body } from "express-validator";
-import { validateRequest } from "../middlewares";
+import { authPayloadVerification, validateRequest } from "../middlewares";
 import { getUserByEmail } from "../services";
+import { PasswordService } from "../services/password.service";
 import { AuthErrors } from "../types";
 const route = Router();
 
 route.post(
   "/api/users/signin",
-  body("email").isEmail().withMessage("Email must be valid"),
-  body("password")
-    .isString()
-    .isLength({ min: 4, max: 20 })
-    .trim()
-    .withMessage("Must Have a password"),
+  ...authPayloadVerification,
   validateRequest,
   async (req: Request, res: Response) => {
     // console.log(email, password);
@@ -27,11 +22,14 @@ route.post(
     if (!isMatch) {
       throw new AuthErrors();
     }
-    const jwt = user.generateJWT();
+    const jwt = PasswordService.generateJWT(user);
+
     req.session = {
       ...req.session,
       jwt,
     };
+
+    console.log(req.session);
 
     return res.status(200).send({
       data: user,
