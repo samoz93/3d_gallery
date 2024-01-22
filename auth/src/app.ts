@@ -28,8 +28,6 @@ routes.forEach((route) => app.use("/api/users", route));
 
 // Not found routes and error handling
 app.use("*", (req, res, next) => {
-  console.log("NOT FOUND", req.url);
-
   next(new NotFoundError());
 });
 
