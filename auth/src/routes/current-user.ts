@@ -1,11 +1,10 @@
 import { Router } from "express";
-import { currentUser } from "../lib";
 
 const route = Router();
 
-route.get("/api/users/currentuser", currentUser, (req, res) => {
+route.get("/currentuser", (req, res) => {
   res.send({
-    data: req.user,
+    data: req.user || null,
   });
 });
 

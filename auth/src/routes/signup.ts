@@ -7,7 +7,7 @@ import { UserExists } from "../types";
 const route = Router();
 
 route.post(
-  "/api/users/signup",
+  "/signup",
   ...authPayloadVerification,
   body("passwordConfirmation").custom((value, { req }) => {
     if (value !== req.body.password) {

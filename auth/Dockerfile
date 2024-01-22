@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY package.json .
 
-RUN yarn global add pnpm && pnpm install
+RUN yarn global add pnpm && pnpm install --only=prod
 
 COPY . .
 

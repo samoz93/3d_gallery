@@ -18,12 +18,12 @@ export const currentUser = (
   const { jwt } = req.session || {};
 
   if (!jwt) {
-    next();
+    return next();
   }
 
   try {
     req.user = PasswordService.decodeJWT(jwt) || null;
   } catch (error) {}
 
-  next();
+  return next();
 };
