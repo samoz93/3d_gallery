@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body,
+html,
+#__next {
+  font-family: "Nunito", sans-serif;
+  box-sizing: border-box;
+  height: 100%;
+}

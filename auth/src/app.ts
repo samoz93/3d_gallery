@@ -1,14 +1,15 @@
 import cookieSession from "cookie-session";
+// import cors from "cors";
 import express, { RequestHandler, json } from "express";
 import "express-async-errors";
 import { currentUser } from "./lib";
 import { errorHandler } from "./middlewares";
 import { signinRoute, signoutRoute, signupRoute, usersRoute } from "./routes";
 import { NotFoundError } from "./types";
-
 const routes = [usersRoute, signinRoute, signoutRoute, signupRoute];
 
 const middleWares: RequestHandler[] = [
+  // cors(),
   json(),
   cookieSession({
     signed: false,

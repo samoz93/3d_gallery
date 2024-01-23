@@ -1,4 +1,4 @@
-import { Model, Schema, model } from "mongoose";
+import { Document, Model, Schema, model } from "mongoose";
 import { PasswordService } from "../services/password.service";
 
 // interface UserModel extends Model {}

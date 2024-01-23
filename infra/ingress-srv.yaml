@@ -18,3 +18,10 @@ spec:
                 name: auth-s
                 port:
                   number: 3010
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: client-s
+                port:
+                  number: 3001
