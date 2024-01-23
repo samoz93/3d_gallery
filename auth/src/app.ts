@@ -1,11 +1,14 @@
 import cookieSession from "cookie-session";
 // import cors from "cors";
+import {
+  NotFoundError,
+  currentUserMiddleWare,
+  errorHandler,
+} from "@samoznew/common";
 import express, { RequestHandler, json } from "express";
 import "express-async-errors";
-import { currentUser } from "./lib";
-import { errorHandler } from "./middlewares";
+import { CONFIG } from "./config";
 import { signinRoute, signoutRoute, signupRoute, usersRoute } from "./routes";
-import { NotFoundError } from "./types";
 const routes = [usersRoute, signinRoute, signoutRoute, signupRoute];
 
 const middleWares: RequestHandler[] = [
@@ -15,7 +18,7 @@ const middleWares: RequestHandler[] = [
     signed: false,
     secure: process.env.NODE_ENV != "test",
   }),
-  currentUser,
+  currentUserMiddleWare(CONFIG.JWT_KEY),
 ];
 
 const app = express();

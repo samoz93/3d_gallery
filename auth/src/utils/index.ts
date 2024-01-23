@@ -1,4 +1,4 @@
-import { to } from "await-to-js";
-import * as _ from "lodash";
+import { PasswordService } from "@samoznew/common";
+import { CONFIG } from "../config";
 
-export { _, to };
+export const passwordManager = new PasswordService(CONFIG.JWT_KEY);

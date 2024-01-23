@@ -1,8 +1,12 @@
+import {
+  AuthErrors,
+  NotFoundError,
+  authPayloadVerification,
+  validateRequest,
+} from "@samoznew/common";
 import { Request, Response, Router } from "express";
-import { authPayloadVerification, validateRequest } from "../middlewares";
 import { getUserByEmail } from "../services";
-import { PasswordService } from "../services/password.service";
-import { AuthErrors, NotFoundError } from "../types";
+import { passwordManager } from "../utils";
 const route = Router();
 
 route.post(
@@ -21,7 +25,7 @@ route.post(
     if (!isMatch) {
       throw new AuthErrors();
     }
-    const jwt = PasswordService.generateJWT(user);
+    const jwt = passwordManager.generateJWT(user);
 
     req.session = {
       ...req.session,

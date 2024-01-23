@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@samoznew/common':
+    specifier: ^1.0.3
+    version: 1.0.3
   '@types/cookie-session':
     specifier: ^2.0.48
     version: 2.0.48
@@ -644,6 +647,15 @@ packages:
     resolution: {integrity: sha512-8zJ8N1x51xo9hwPh6AWnKdLGEC5N3lDa6kms1YHmFBoRhTpJR6HG8wWk0td1MVCu9cD4YBrvjZEtd5Obw0Fbnw==}
     dependencies:
       sparse-bitfield: 3.0.3
+
+  /@samoznew/common@1.0.3:
+    resolution: {integrity: sha512-Q05thC44TmyjdyWfrx8cfhw/U8YKnyAbsrD8yOeLSk3iU/4VzObvpuUR6doIxXiO+6YX6lnCgzpfR4TXKm6F1A==}
+    dependencies:
+      await-to-js: 3.0.0
+      express-validator: 7.0.1
+      jsonwebtoken: 9.0.2
+      lodash: 4.17.21
+    dev: false
 
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}

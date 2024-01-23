@@ -1,9 +1,12 @@
+import {
+  UserExists,
+  authPayloadVerification,
+  validateRequest,
+} from "@samoznew/common";
 import { Router } from "express";
 import { body } from "express-validator";
-import { authPayloadVerification, validateRequest } from "../middlewares";
 import { createUser, isUserExist } from "../services";
-import { PasswordService } from "../services/password.service";
-import { UserExists } from "../types";
+import { passwordManager } from "../utils";
 const route = Router();
 
 route.post(
@@ -25,7 +28,7 @@ route.post(
     }
 
     const user = await createUser(email, password);
-    const jwt = PasswordService.generateJWT(user);
+    const jwt = passwordManager.generateJWT(user);
 
     req.session = {
       ...req.session,

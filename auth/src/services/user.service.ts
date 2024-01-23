@@ -1,6 +1,6 @@
+import { DBError } from "@samoznew/common";
 import to from "await-to-js";
 import { UserModel } from "../models";
-import { DBError } from "../types";
 
 export const isUserExist = async (email: string) => {
   const [err, user] = await to(UserModel.findOne({ email }));
