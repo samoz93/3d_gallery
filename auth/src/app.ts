@@ -7,8 +7,8 @@ import {
 } from "@samoznew/common";
 import express, { RequestHandler, json } from "express";
 import "express-async-errors";
-import { CONFIG } from "./config";
 import { signinRoute, signoutRoute, signupRoute, usersRoute } from "./routes";
+import { passwordManager } from "./utils";
 const routes = [usersRoute, signinRoute, signoutRoute, signupRoute];
 
 const middleWares: RequestHandler[] = [
@@ -18,7 +18,7 @@ const middleWares: RequestHandler[] = [
     signed: false,
     secure: process.env.NODE_ENV != "test",
   }),
-  currentUserMiddleWare(CONFIG.JWT_KEY),
+  currentUserMiddleWare(passwordManager),
 ];
 
 const app = express();

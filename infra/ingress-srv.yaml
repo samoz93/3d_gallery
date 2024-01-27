@@ -18,6 +18,13 @@ spec:
                 name: auth-s
                 port:
                   number: 3010
+          - path: /api/tickets/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: tickets-s
+                port:
+                  number: 3012
           - path: /?(.*)
             pathType: Prefix
             backend:
