@@ -1,6 +1,9 @@
 import request from "supertest";
 import { app } from "../../src/app";
 describe("Signup route", () => {
+  beforeAll(async () => {
+    jest.mock("../../src/nat.wrapper.ts");
+  });
   it("we are able to reach api/tickets", async () => {
     const res = await request(app).post("/api/tickets").send({});
     expect(res.status).not.toEqual(404);
@@ -93,8 +96,6 @@ describe("Signup route", () => {
         title: "newTitle",
         price: 200,
       });
-
-    console.log("updatedTicket", updatedTicket.body.data);
 
     expect(updatedTicket.body.data.title).toEqual("newTitle");
     expect(updatedTicket.body.data.price).toEqual(200);

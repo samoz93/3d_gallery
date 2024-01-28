@@ -5,3 +5,8 @@ export class TicketCreatedSubject extends BaseSubject<EventsType, ITicket> {
   subject = EventsType.TICKET_CREATED;
   streamName: string = "ticketStream";
 }
+
+export class TicketUpdatedSubject extends BaseSubject<EventsType, ITicket> {
+  subject = EventsType.TICKET_CREATED;
+  streamName: string = "ticketStream";
+}
