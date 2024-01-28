@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { passwordManager } from "../src/utils";
 
 declare global {
-  function signin(): string[];
+  function signin(idx?: number): string[];
 }
 
 let mongo: MongoMemoryServer;
@@ -28,9 +28,13 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = (): string[] => {
-  const email = "test@test.com";
-  const jwt = passwordManager.generateJWT({ email, id: "123" });
+const users = [
+  { email: "test@test.com", id: "123" },
+  { email: "test@test2.com", id: "321" },
+];
+global.signin = (idx: number = 0): string[] => {
+  const user = users[idx];
+  const jwt = passwordManager.generateJWT(user);
   const cookie = `session=${Buffer.from(JSON.stringify({ jwt })).toString(
     "base64"
   )};`;

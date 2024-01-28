@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nat-d
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nat-d
+  template:
+    metadata:
+      labels:
+        app: nat-d
+    spec:
+      containers:
+        - name: nat-d
+          image: nats
+          args: ["-js"]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nat-s
+spec:
+  selector:
+    app: nat-d
+  ports:
+    - name: client
+      protocol: TCP
+      port: 4222
+      targetPort: 4222
+    - name: monitoring
+      protocol: TCP
+      port: 8222
+      targetPort: 8222

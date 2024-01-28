@@ -4,8 +4,6 @@ import { app } from "./app";
 import { CONFIG } from "./config";
 
 const init = async () => {
-  console.log("Starting up...", CONFIG);
-
   const [err] = await to(mongoose.connect(CONFIG.MONGO_URI));
   if (err) {
     return;

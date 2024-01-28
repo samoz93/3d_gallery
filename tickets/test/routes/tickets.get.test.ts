@@ -6,7 +6,7 @@ describe("Signup route", () => {
     price: 100,
   };
 
-  it("we are able to reach api/tickets", async () => {
+  it("We are able to get ticket information", async () => {
     const res = await request(app)
       .post("/api/tickets")
       .set("Cookie", signin())

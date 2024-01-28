@@ -16,7 +16,6 @@ import "express-async-errors";
 import { CONFIG } from "./config";
 import { createTicketRouter, getTicketsRouter } from "./routes";
 import { passwordManager } from "./utils";
-
 const routes: any[] = [createTicketRouter, getTicketsRouter];
 
 const middleWares: RequestHandler[] = [
