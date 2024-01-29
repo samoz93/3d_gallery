@@ -1,0 +1,17 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+build:
+  local:
+    push: false
+  artifacts:
+    - image: samoz93/frontend
+      context: frontend
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.{ts,js,tsx,jsx,css,scss}"
+            dest: .
+manifests:
+  rawYaml:
+    - ./infra/*
