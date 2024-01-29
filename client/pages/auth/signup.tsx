@@ -1,16 +1,17 @@
 import Router from "next/router";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRequest } from "utils/useRequest";
 import { prettifyKey } from "utils/util";
 
 const signup = () => {
   const { data, error, loading, request } = useRequest();
-  const inputs = ["email", "password", "passwordConfirmation"];
-  const [state, setState] = useState<Record<string, string>>(
-    inputs.reduce((acc, input) => {
-      return { ...acc, [input]: "" };
-    }, {})
-  );
+  const [state, setState] = useState<Record<string, string>>({
+    email: "test@test.com",
+    password: "test",
+    passwordConfirmation: "test",
+  });
+
+  const inputs = useMemo(() => Object.keys(state), []);
 
   const setInput = (key: string, val: string) => {
     setState((state) => ({ ...state, [key]: val }));

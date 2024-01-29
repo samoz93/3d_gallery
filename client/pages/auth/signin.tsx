@@ -5,13 +5,12 @@ import { prettifyKey } from "utils/util";
 
 const signup = () => {
   const { data, error, loading, request } = useRequest();
-  const inputs = ["email", "password"];
-  const [state, setState] = useState<Record<string, string>>(
-    inputs.reduce((acc, input) => {
-      return { ...acc, [input]: "" };
-    }, {})
-  );
+  const [state, setState] = useState<Record<string, string>>({
+    email: "test@test.com",
+    password: "test",
+  });
 
+  const inputs = Object.keys(state);
   const setInput = (key: string, val: string) => {
     setState((state) => ({ ...state, [key]: val }));
   };

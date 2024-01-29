@@ -1,11 +1,4 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { useEffect } from "react";
-import { axiosClient } from "utils/axiosBE";
-
-export default function Page({
-  user,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  useEffect(() => {}, []);
+export default function Page({ user }: { user: User }) {
   return (
     <>
       {user ? (
@@ -19,25 +12,3 @@ export default function Page({
     </>
   );
 }
-
-type User = {
-  id: string;
-  email: string;
-};
-
-export const getServerSideProps = (async ({ req }) => {
-  try {
-    const { data } = await axiosClient.get("/api/users/me", {
-      headers: req.headers,
-    });
-    return {
-      props: {
-        user: data?.data as User | null,
-      },
-    };
-  } catch (error) {
-    throw error;
-  }
-}) satisfies GetServerSideProps<{
-  user: User | null;
-}>;
