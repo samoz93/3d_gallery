@@ -4,5 +4,5 @@ to run the app
 install skaffold using the [link](https://skaffold.dev/docs/install/), then run :
 
 ```
-Npm run dev
+npm run dev
 ```
