@@ -2,8 +2,9 @@
   "name": "mirco_services_tickets",
   "version": "1.0.0",
   "description": "Ticketing selling app",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cd auth && npm run test && cd ../tickets && npm run test && cd ../",
     "dev": "skaffold dev"
   },
   "keywords": [],
