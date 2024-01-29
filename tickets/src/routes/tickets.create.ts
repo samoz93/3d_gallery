@@ -1,6 +1,13 @@
-import { AuthErrors, needsAuth, validateRequest } from "@samoznew/common";
+import {
+  AuthErrors,
+  EventsType,
+  needsAuth,
+  validateRequest,
+} from "@samoznew/common";
 import { Router } from "express";
 import { body } from "express-validator";
+import { ITicket } from "../models/tickets.model";
+import { NatsWrapper } from "../nat.wrapper";
 import { createTicket, getTicketById, updateTicket } from "../services";
 const router = Router();
 const basicValidation = [
@@ -21,6 +28,13 @@ router.post("/", ...basicValidation, async (req, res) => {
     price,
     userId: req.user!.id,
   });
+
+  NatsWrapper.getInstance()
+    .getSubject<ITicket>(EventsType.TICKET_CREATED)
+    ?.send(ticket)
+    .catch((e) => {
+      console.log("ERROR", e);
+    });
 
   res.status(201).json({ data: ticket });
 });

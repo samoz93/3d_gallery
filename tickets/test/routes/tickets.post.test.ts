@@ -1,9 +1,12 @@
 import request from "supertest";
 import { app } from "../../src/app";
+import { NatsWrapper } from "../../src/nat.wrapper";
 describe("Signup route", () => {
   beforeAll(async () => {
-    jest.mock("../../src/nat.wrapper.ts");
+    jest.spyOn(NatsWrapper, "getInstance");
+    jest.spyOn(NatsWrapper.getInstance(), "getSubject");
   });
+
   it("we are able to reach api/tickets", async () => {
     const res = await request(app).post("/api/tickets").send({});
     expect(res.status).not.toEqual(404);
@@ -19,6 +22,7 @@ describe("Signup route", () => {
       .post("/api/tickets")
       .set("Cookie", signin())
       .send({});
+
     expect(res.status).not.toEqual(401);
   });
 
@@ -76,6 +80,8 @@ describe("Signup route", () => {
     expect(res.body.data.title).toEqual("asdadsas");
     expect(res.body.data.price).toEqual(100);
     expect(res.body.data).toHaveProperty("id");
+    expect(NatsWrapper.getInstance).toHaveBeenCalled();
+    expect(NatsWrapper.getInstance().getSubject).toHaveBeenCalled();
   });
 
   it("Been able to update a ticket", async () => {

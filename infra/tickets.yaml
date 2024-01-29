@@ -25,6 +25,10 @@ spec:
               value: "mongodb://tickets-mongo-s:27017/tickets"
             - name: PORT
               value: "3012"
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
 ---
 apiVersion: v1
 kind: Service

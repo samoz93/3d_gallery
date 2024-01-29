@@ -1,13 +1,13 @@
 import { BaseSubject, EventsType, to } from "@samoznew/common";
 import { NatsConnection, connect } from "nats";
-import { TicketCreatedSubject, TicketUpdatedSubject } from "./events";
 
 export class NatsWrapper {
   private _subjects: Partial<Record<EventsType, BaseSubject<EventsType, any>>> =
     {};
 
+  private _nc: NatsConnection | undefined;
   private static _instance: NatsWrapper;
-  private constructor() {}
+  constructor() {}
 
   static getInstance() {
     if (!this._instance) {
@@ -31,20 +31,26 @@ export class NatsWrapper {
       throw err;
     }
 
-    await this._initSubjects(nc);
-    return this;
+    // await this._initSubjects(nc);
+    this._nc = nc;
+    return nc;
   }
 
   private async _initSubjects(nc: NatsConnection) {
-    this._subjects[EventsType.TICKET_CREATED] = new TicketCreatedSubject(nc);
-    this._subjects[EventsType.TICKET_UPDATED] = new TicketUpdatedSubject(nc);
+    // this._subjects[EventsType.TICKET_CREATED] = new TicketCreatedSubject(nc);
+    // this._subjects[EventsType.TICKET_UPDATED] = new TicketUpdatedSubject(nc);
 
     for await (const subject of Object.values(this._subjects)) {
       await subject.init();
     }
   }
 
-  getSubject<D>(type: EventsType) {
+  getSubject<D>(type: EventsType): BaseSubject<EventsType, D> {
     return this._subjects[type] as BaseSubject<EventsType, D>;
+  }
+
+  async close() {
+    await this._nc?.close();
+    this._subjects = {};
   }
 }
