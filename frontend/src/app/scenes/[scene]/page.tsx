@@ -34,8 +34,6 @@ export default function ScenePage({ params }: { params: { scene: string } }) {
     return await res.text();
   });
 
-  console.log("data", data, isLoading, error);
-
   return (
     <Suspense fallback={<ThreeLoader />}>
       <ThreeCanvas> {Scene && <Scene glsl={glsl} />}</ThreeCanvas>

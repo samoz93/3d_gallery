@@ -10,8 +10,15 @@ spec:
   rules:
     - http:
         paths:
+          - path: /api/?(.*)
+            pathType: Exact
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 3000
           - path: /
-            pathType: Prefix
+            pathType: Exact
             backend:
               service:
                 name: frontend-service

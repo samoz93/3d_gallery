@@ -1,13 +1,15 @@
 import {
   AudioVisScene,
+  BrainScene,
   DancerScene,
   PlumbusSphereScene,
 } from "@samoz/app/scene_components";
 import { GoatScene } from "@samoz/app/scene_components/GoatScene";
-import { UFOScene } from "@samoz/app/scene_components/UFOScene";
 import {
   audio_vis_frag,
   audio_vis_ver,
+  brain_frag,
+  brain_ver,
   dissolve_frag,
   dissolve_ver,
   plumbus_frag,
@@ -65,13 +67,13 @@ export const SceneData: {
     },
   },
   {
-    title: "UFO Wow",
-    comp: UFOScene,
+    title: "Brain",
+    comp: BrainScene,
     path: "ufo_scene",
     isDev: true,
     glsl: {
-      vertexShader: vibrant_ver,
-      fragmentShader: vibrant_frag,
+      vertexShader: brain_ver,
+      fragmentShader: brain_frag,
     },
   },
 ];

@@ -1,6 +1,5 @@
 FROM --platform=linux/amd64 node:18-alpine
 
-RUN apk add --no-cache bash
 RUN yarn global add pnpm
 
 WORKDIR /frontend
@@ -16,10 +15,8 @@ RUN \
 
 COPY . .
 
-ENV NODE_ENV production
+# ENV NODE_ENV production
 
-RUN npm run build
+# RUN npm run build
 
-EXPOSE 3000
-
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]

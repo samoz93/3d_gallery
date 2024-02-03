@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gallery-config
+  namespace: samoz93
+data:
+  SALT_ROUNDS: "20"
+  JWT_SECRET: "SAMOZ@TECH@ASDA"
+  DB_USER_NAME: "root"
+  DB_PASSWORD: "example"

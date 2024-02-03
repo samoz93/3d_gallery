@@ -16,7 +16,6 @@ export class SamozValidationPipe implements PipeTransform<any> {
     const errors = await validate(object);
 
     if (errors.length > 0) {
-      console.log('errors', errors);
       throw new SamozValidationError(errors);
     }
     return value;

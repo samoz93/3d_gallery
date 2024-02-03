@@ -5,11 +5,11 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from '@samoz/controllers/app.controller';
 import { AuthModule } from './auth/auth.module';
-import { config } from './config/constant';
 import { SamozExceptionFilter } from './filters/exception-filter.filter';
 import { ProjectsModule } from './projects/projects.module';
 import { UserModule } from './user/user.module';
-const dbConnection = `mongodb://${config.db.userName}:${config.db.password}@mongo:27017`;
+
+const dbConnection = `mongodb://mongo-service:27017/chat`;
 
 @Module({
   imports: [

@@ -1,0 +1,303 @@
+apiVersion: v1
+items:
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: ValidatingWebhookConfiguration
+  metadata:
+    annotations:
+      cert-manager.io/inject-ca-from-secret: cert-manager/cert-manager-webhook-ca
+      meta.helm.sh/release-name: cert-manager
+      meta.helm.sh/release-namespace: cert-manager
+    creationTimestamp: "2024-01-29T16:41:33Z"
+    generation: 2
+    labels:
+      app: webhook
+      app.kubernetes.io/component: webhook
+      app.kubernetes.io/instance: cert-manager
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: webhook
+      app.kubernetes.io/version: v1.10.1
+      helm.sh/chart: cert-manager-v1.10.1
+    name: cert-manager-webhook
+    resourceVersion: "43554"
+    uid: 863ee524-97fb-4005-b8b6-4efb68be0cc9
+  webhooks:
+  - admissionReviewVersions:
+    - v1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJ3akNDQVVpZ0F3SUJBZ0lSQU9kdThWNnE0MmNnVGtqcEdEQVArTlV3Q2dZSUtvWkl6ajBFQXdNd0lqRWcKTUI0R0ExVUVBeE1YWTJWeWRDMXRZVzVoWjJWeUxYZGxZbWh2YjJzdFkyRXdIaGNOTWpRd01USTVNVGN3T1RVegpXaGNOTWpVd01USTRNVGN3T1RVeldqQWlNU0F3SGdZRFZRUURFeGRqWlhKMExXMWhibUZuWlhJdGQyVmlhRzl2CmF5MWpZVEIyTUJBR0J5cUdTTTQ5QWdFR0JTdUJCQUFpQTJJQUJIU0pjaHpzZXZBVDI0LzFEanJiTjNIb0ZldWEKTjR0MDFjNkNjK3R5V2dYbVFXUnNuWDdDV2pjY0pEaHRpRmkrNTFtc2dvMmtoNjNBZDBOQ01sZE0zL2YwazY1TApvMkQreVg4ejZ2bXcwZVo2cHR4OStwMVZZQndRNW9yUWpGVE54YU5DTUVBd0RnWURWUjBQQVFIL0JBUURBZ0trCk1BOEdBMVVkRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZOenpHMmpkdkNncW1nZ0trWElGV20rRGwxcUwKTUFvR0NDcUdTTTQ5QkFNREEyZ0FNR1VDTVFDYkNDaTBXU0V0V1N1dFdoQ0s4L1J5Y3poV3dnbzh1TlB6Wm9CbQphN0RGVTIyUnliRGhRandlaUZ3YzhGa21IaTRDTUFLSEs1bC9iQlNzTGltb0ZweGFNQ3k2ZEdNSE5TZndXN2k0CmwxM3VCZDF0bmxZS2RrZHVaTnBkZUNQVmJoOXZYdz09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+      service:
+        name: cert-manager-webhook
+        namespace: cert-manager
+        path: /validate
+        port: 443
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: webhook.cert-manager.io
+    namespaceSelector:
+      matchExpressions:
+      - key: cert-manager.io/disable-validation
+        operator: NotIn
+        values:
+        - "true"
+      - key: name
+        operator: NotIn
+        values:
+        - cert-manager
+    objectSelector: {}
+    rules:
+    - apiGroups:
+      - cert-manager.io
+      - acme.cert-manager.io
+      apiVersions:
+      - v1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - '*/*'
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 10
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: ValidatingWebhookConfiguration
+  metadata:
+    annotations:
+      cert-manager.io/inject-ca-from: do-operator-system/do-operator-serving-cert
+    creationTimestamp: "2024-01-29T13:56:07Z"
+    generation: 1
+    labels:
+      c3.doks.digitalocean.com/component: do-operator
+      c3.doks.digitalocean.com/plane: data
+      doks.digitalocean.com/managed: "true"
+    name: do-operator-validating-webhook-configuration
+    resourceVersion: "1693"
+    uid: e7d50a6e-561d-4905-8d04-6acdc40d7366
+  webhooks:
+  - admissionReviewVersions:
+    - v1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVDakNDQXZLZ0F3SUJBZ0lSQUxEejBLb2lWd0VLVHRiZGRLb1U2OFV3RFFZSktvWklodmNOQVFFTEJRQXcKQURBZUZ3MHlOREF4TWpreE16VXhORGxhRncweU5EQTBNamd4TXpVeE5EbGFNQUF3Z2dFaU1BMEdDU3FHU0liMwpEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURMTDJ0VkV6Uzh2T2lNVFdwTzRHaTZYSm11aEpOaFZaTzdYVzFuCi9YTm9XUkRCOHBscG4wQXg4aXAyRHhKTDRnb0FBQ0tmTFZ6ZkRoeE5pVmM3MWJoRkY1bndFYTdFNGJiemN6RXYKSVZwUGpqWWU2ajVhWmI5T1FHakxvUyt5YnFESWtTZVhCUWdRNS94dUlZYjVwRUliZGM3aGp2eVpFaHFLTU1ReQowZmxydUtqNUFJdzA2MWxTdDFEVExvRGlpV2FIZEFGeU91dnpScXRJYnRKTUVWem5KazF4S0pQNEdOdlhwbUVjCnl0VkE0Q0V0dzJRVEIrZ1l4L0JtUHgvSGoxNGpLSEdOUTh1WjBmSGp2TjdCUnRUdUhvZHIrRThEOHBIcVVLV20KUmt5ZjRqQ2xrM0pxMmxxSUZqMmlZK1R6WnRySmpUY0Vxc3JFcXp6LzNyNDBtOXhyQWdNQkFBR2pnZ0Y5TUlJQgplVEFPQmdOVkhROEJBZjhFQkFNQ0JhQXdEQVlEVlIwVEFRSC9CQUl3QURDQ0FWY0dBMVVkRVFFQi93U0NBVXN3CmdnRkhnaHRrYnkxdmNHVnlZWFJ2Y2kxM1pXSm9iMjlyTFhObGNuWnBZMldDUUdSdkxXOXdaWEpoZEc5eUxYZGwKWW1odmIyc3RjMlZ5ZG1salpTNWpPVFF6WlRNek1pMWpZalJoTFRSa01EZ3RPV0V3TnkxallUVmpOR015WldSaApZVG1DUkdSdkxXOXdaWEpoZEc5eUxYZGxZbWh2YjJzdGMyVnlkbWxqWlM1ak9UUXpaVE16TWkxallqUmhMVFJrCk1EZ3RPV0V3TnkxallUVmpOR015WldSaFlUa3VjM1pqZ2t4a2J5MXZjR1Z5WVhSdmNpMTNaV0pvYjI5ckxYTmwKY25acFkyVXVZemswTTJVek16SXRZMkkwWVMwMFpEQTRMVGxoTURjdFkyRTFZelJqTW1Wa1lXRTVMbk4yWXk1agpiSFZ6ZEdWeWdsSmtieTF2Y0dWeVlYUnZjaTEzWldKb2IyOXJMWE5sY25acFkyVXVZemswTTJVek16SXRZMkkwCllTMDBaREE0TFRsaE1EY3RZMkUxWXpSak1tVmtZV0U1TG5OMll5NWpiSFZ6ZEdWeUxteHZZMkZzTUEwR0NTcUcKU0liM0RRRUJDd1VBQTRJQkFRQWpJanRybVdOdXIvWlJhd1FUNzEzMXFaUkJ6WE54akZQU0NMeXJWQ0FtVnp5aApzNU0yTGpXOWZnYzNjWU9kS0pSQzZGcWZodUMxNzZ1a3I4VVIyKytMYnQyV0tva1NSM3BpMlRWYnZ5UGN3aVdnCnMzMGEzZjAyTmFCUWJkZjMrZ1JmKzBDZ1ZkR1o3NXcrWGszWURaY1hGUFpvTzNTZUtIcFhXaGgyczRuVDdISWwKOVFXZ3dCWTJWc29XdEs5dFBzM0lXdzJTdkVoZDRzT1RhaHNUUUNWRnFJQVRNSGJOS2loRkpUNmVqYVd6WDlFTgp1bEVkdVZvOGtPR1FDbGt6VmFNT3pWa2gzb2xqWTVpUlZCUFk2S3NUWUpNZFIzTFdCa3BzcC9NZ1BRSXVOWnRSCmlmWnRZQTFGVHZOeUErWHpCaVg1eEhwcHFzV1RrS1liWVNlT21nbXIKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      url: https://do-operator-webhook-service/validate-databases-digitalocean-com-v1alpha1-databasecluster
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: vdatabasecluster.kb.io
+    namespaceSelector: {}
+    objectSelector: {}
+    rules:
+    - apiGroups:
+      - databases.digitalocean.com
+      apiVersions:
+      - v1alpha1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - databaseclusters
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 10
+  - admissionReviewVersions:
+    - v1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVDakNDQXZLZ0F3SUJBZ0lSQUxEejBLb2lWd0VLVHRiZGRLb1U2OFV3RFFZSktvWklodmNOQVFFTEJRQXcKQURBZUZ3MHlOREF4TWpreE16VXhORGxhRncweU5EQTBNamd4TXpVeE5EbGFNQUF3Z2dFaU1BMEdDU3FHU0liMwpEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURMTDJ0VkV6Uzh2T2lNVFdwTzRHaTZYSm11aEpOaFZaTzdYVzFuCi9YTm9XUkRCOHBscG4wQXg4aXAyRHhKTDRnb0FBQ0tmTFZ6ZkRoeE5pVmM3MWJoRkY1bndFYTdFNGJiemN6RXYKSVZwUGpqWWU2ajVhWmI5T1FHakxvUyt5YnFESWtTZVhCUWdRNS94dUlZYjVwRUliZGM3aGp2eVpFaHFLTU1ReQowZmxydUtqNUFJdzA2MWxTdDFEVExvRGlpV2FIZEFGeU91dnpScXRJYnRKTUVWem5KazF4S0pQNEdOdlhwbUVjCnl0VkE0Q0V0dzJRVEIrZ1l4L0JtUHgvSGoxNGpLSEdOUTh1WjBmSGp2TjdCUnRUdUhvZHIrRThEOHBIcVVLV20KUmt5ZjRqQ2xrM0pxMmxxSUZqMmlZK1R6WnRySmpUY0Vxc3JFcXp6LzNyNDBtOXhyQWdNQkFBR2pnZ0Y5TUlJQgplVEFPQmdOVkhROEJBZjhFQkFNQ0JhQXdEQVlEVlIwVEFRSC9CQUl3QURDQ0FWY0dBMVVkRVFFQi93U0NBVXN3CmdnRkhnaHRrYnkxdmNHVnlZWFJ2Y2kxM1pXSm9iMjlyTFhObGNuWnBZMldDUUdSdkxXOXdaWEpoZEc5eUxYZGwKWW1odmIyc3RjMlZ5ZG1salpTNWpPVFF6WlRNek1pMWpZalJoTFRSa01EZ3RPV0V3TnkxallUVmpOR015WldSaApZVG1DUkdSdkxXOXdaWEpoZEc5eUxYZGxZbWh2YjJzdGMyVnlkbWxqWlM1ak9UUXpaVE16TWkxallqUmhMVFJrCk1EZ3RPV0V3TnkxallUVmpOR015WldSaFlUa3VjM1pqZ2t4a2J5MXZjR1Z5WVhSdmNpMTNaV0pvYjI5ckxYTmwKY25acFkyVXVZemswTTJVek16SXRZMkkwWVMwMFpEQTRMVGxoTURjdFkyRTFZelJqTW1Wa1lXRTVMbk4yWXk1agpiSFZ6ZEdWeWdsSmtieTF2Y0dWeVlYUnZjaTEzWldKb2IyOXJMWE5sY25acFkyVXVZemswTTJVek16SXRZMkkwCllTMDBaREE0TFRsaE1EY3RZMkUxWXpSak1tVmtZV0U1TG5OMll5NWpiSFZ6ZEdWeUxteHZZMkZzTUEwR0NTcUcKU0liM0RRRUJDd1VBQTRJQkFRQWpJanRybVdOdXIvWlJhd1FUNzEzMXFaUkJ6WE54akZQU0NMeXJWQ0FtVnp5aApzNU0yTGpXOWZnYzNjWU9kS0pSQzZGcWZodUMxNzZ1a3I4VVIyKytMYnQyV0tva1NSM3BpMlRWYnZ5UGN3aVdnCnMzMGEzZjAyTmFCUWJkZjMrZ1JmKzBDZ1ZkR1o3NXcrWGszWURaY1hGUFpvTzNTZUtIcFhXaGgyczRuVDdISWwKOVFXZ3dCWTJWc29XdEs5dFBzM0lXdzJTdkVoZDRzT1RhaHNUUUNWRnFJQVRNSGJOS2loRkpUNmVqYVd6WDlFTgp1bEVkdVZvOGtPR1FDbGt6VmFNT3pWa2gzb2xqWTVpUlZCUFk2S3NUWUpNZFIzTFdCa3BzcC9NZ1BRSXVOWnRSCmlmWnRZQTFGVHZOeUErWHpCaVg1eEhwcHFzV1RrS1liWVNlT21nbXIKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      url: https://do-operator-webhook-service/validate-databases-digitalocean-com-v1alpha1-databaseclusterreference
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: vdatabaseclusterreference.kb.io
+    namespaceSelector: {}
+    objectSelector: {}
+    rules:
+    - apiGroups:
+      - databases.digitalocean.com
+      apiVersions:
+      - v1alpha1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - databaseclusterreferences
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 10
+  - admissionReviewVersions:
+    - v1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVDakNDQXZLZ0F3SUJBZ0lSQUxEejBLb2lWd0VLVHRiZGRLb1U2OFV3RFFZSktvWklodmNOQVFFTEJRQXcKQURBZUZ3MHlOREF4TWpreE16VXhORGxhRncweU5EQTBNamd4TXpVeE5EbGFNQUF3Z2dFaU1BMEdDU3FHU0liMwpEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURMTDJ0VkV6Uzh2T2lNVFdwTzRHaTZYSm11aEpOaFZaTzdYVzFuCi9YTm9XUkRCOHBscG4wQXg4aXAyRHhKTDRnb0FBQ0tmTFZ6ZkRoeE5pVmM3MWJoRkY1bndFYTdFNGJiemN6RXYKSVZwUGpqWWU2ajVhWmI5T1FHakxvUyt5YnFESWtTZVhCUWdRNS94dUlZYjVwRUliZGM3aGp2eVpFaHFLTU1ReQowZmxydUtqNUFJdzA2MWxTdDFEVExvRGlpV2FIZEFGeU91dnpScXRJYnRKTUVWem5KazF4S0pQNEdOdlhwbUVjCnl0VkE0Q0V0dzJRVEIrZ1l4L0JtUHgvSGoxNGpLSEdOUTh1WjBmSGp2TjdCUnRUdUhvZHIrRThEOHBIcVVLV20KUmt5ZjRqQ2xrM0pxMmxxSUZqMmlZK1R6WnRySmpUY0Vxc3JFcXp6LzNyNDBtOXhyQWdNQkFBR2pnZ0Y5TUlJQgplVEFPQmdOVkhROEJBZjhFQkFNQ0JhQXdEQVlEVlIwVEFRSC9CQUl3QURDQ0FWY0dBMVVkRVFFQi93U0NBVXN3CmdnRkhnaHRrYnkxdmNHVnlZWFJ2Y2kxM1pXSm9iMjlyTFhObGNuWnBZMldDUUdSdkxXOXdaWEpoZEc5eUxYZGwKWW1odmIyc3RjMlZ5ZG1salpTNWpPVFF6WlRNek1pMWpZalJoTFRSa01EZ3RPV0V3TnkxallUVmpOR015WldSaApZVG1DUkdSdkxXOXdaWEpoZEc5eUxYZGxZbWh2YjJzdGMyVnlkbWxqWlM1ak9UUXpaVE16TWkxallqUmhMVFJrCk1EZ3RPV0V3TnkxallUVmpOR015WldSaFlUa3VjM1pqZ2t4a2J5MXZjR1Z5WVhSdmNpMTNaV0pvYjI5ckxYTmwKY25acFkyVXVZemswTTJVek16SXRZMkkwWVMwMFpEQTRMVGxoTURjdFkyRTFZelJqTW1Wa1lXRTVMbk4yWXk1agpiSFZ6ZEdWeWdsSmtieTF2Y0dWeVlYUnZjaTEzWldKb2IyOXJMWE5sY25acFkyVXVZemswTTJVek16SXRZMkkwCllTMDBaREE0TFRsaE1EY3RZMkUxWXpSak1tVmtZV0U1TG5OMll5NWpiSFZ6ZEdWeUxteHZZMkZzTUEwR0NTcUcKU0liM0RRRUJDd1VBQTRJQkFRQWpJanRybVdOdXIvWlJhd1FUNzEzMXFaUkJ6WE54akZQU0NMeXJWQ0FtVnp5aApzNU0yTGpXOWZnYzNjWU9kS0pSQzZGcWZodUMxNzZ1a3I4VVIyKytMYnQyV0tva1NSM3BpMlRWYnZ5UGN3aVdnCnMzMGEzZjAyTmFCUWJkZjMrZ1JmKzBDZ1ZkR1o3NXcrWGszWURaY1hGUFpvTzNTZUtIcFhXaGgyczRuVDdISWwKOVFXZ3dCWTJWc29XdEs5dFBzM0lXdzJTdkVoZDRzT1RhaHNUUUNWRnFJQVRNSGJOS2loRkpUNmVqYVd6WDlFTgp1bEVkdVZvOGtPR1FDbGt6VmFNT3pWa2gzb2xqWTVpUlZCUFk2S3NUWUpNZFIzTFdCa3BzcC9NZ1BRSXVOWnRSCmlmWnRZQTFGVHZOeUErWHpCaVg1eEhwcHFzV1RrS1liWVNlT21nbXIKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      url: https://do-operator-webhook-service/validate-databases-digitalocean-com-v1alpha1-databaseuser
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: vdatabaseuser.kb.io
+    namespaceSelector: {}
+    objectSelector: {}
+    rules:
+    - apiGroups:
+      - databases.digitalocean.com
+      apiVersions:
+      - v1alpha1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - databaseusers
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 10
+  - admissionReviewVersions:
+    - v1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVDakNDQXZLZ0F3SUJBZ0lSQUxEejBLb2lWd0VLVHRiZGRLb1U2OFV3RFFZSktvWklodmNOQVFFTEJRQXcKQURBZUZ3MHlOREF4TWpreE16VXhORGxhRncweU5EQTBNamd4TXpVeE5EbGFNQUF3Z2dFaU1BMEdDU3FHU0liMwpEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURMTDJ0VkV6Uzh2T2lNVFdwTzRHaTZYSm11aEpOaFZaTzdYVzFuCi9YTm9XUkRCOHBscG4wQXg4aXAyRHhKTDRnb0FBQ0tmTFZ6ZkRoeE5pVmM3MWJoRkY1bndFYTdFNGJiemN6RXYKSVZwUGpqWWU2ajVhWmI5T1FHakxvUyt5YnFESWtTZVhCUWdRNS94dUlZYjVwRUliZGM3aGp2eVpFaHFLTU1ReQowZmxydUtqNUFJdzA2MWxTdDFEVExvRGlpV2FIZEFGeU91dnpScXRJYnRKTUVWem5KazF4S0pQNEdOdlhwbUVjCnl0VkE0Q0V0dzJRVEIrZ1l4L0JtUHgvSGoxNGpLSEdOUTh1WjBmSGp2TjdCUnRUdUhvZHIrRThEOHBIcVVLV20KUmt5ZjRqQ2xrM0pxMmxxSUZqMmlZK1R6WnRySmpUY0Vxc3JFcXp6LzNyNDBtOXhyQWdNQkFBR2pnZ0Y5TUlJQgplVEFPQmdOVkhROEJBZjhFQkFNQ0JhQXdEQVlEVlIwVEFRSC9CQUl3QURDQ0FWY0dBMVVkRVFFQi93U0NBVXN3CmdnRkhnaHRrYnkxdmNHVnlZWFJ2Y2kxM1pXSm9iMjlyTFhObGNuWnBZMldDUUdSdkxXOXdaWEpoZEc5eUxYZGwKWW1odmIyc3RjMlZ5ZG1salpTNWpPVFF6WlRNek1pMWpZalJoTFRSa01EZ3RPV0V3TnkxallUVmpOR015WldSaApZVG1DUkdSdkxXOXdaWEpoZEc5eUxYZGxZbWh2YjJzdGMyVnlkbWxqWlM1ak9UUXpaVE16TWkxallqUmhMVFJrCk1EZ3RPV0V3TnkxallUVmpOR015WldSaFlUa3VjM1pqZ2t4a2J5MXZjR1Z5WVhSdmNpMTNaV0pvYjI5ckxYTmwKY25acFkyVXVZemswTTJVek16SXRZMkkwWVMwMFpEQTRMVGxoTURjdFkyRTFZelJqTW1Wa1lXRTVMbk4yWXk1agpiSFZ6ZEdWeWdsSmtieTF2Y0dWeVlYUnZjaTEzWldKb2IyOXJMWE5sY25acFkyVXVZemswTTJVek16SXRZMkkwCllTMDBaREE0TFRsaE1EY3RZMkUxWXpSak1tVmtZV0U1TG5OMll5NWpiSFZ6ZEdWeUxteHZZMkZzTUEwR0NTcUcKU0liM0RRRUJDd1VBQTRJQkFRQWpJanRybVdOdXIvWlJhd1FUNzEzMXFaUkJ6WE54akZQU0NMeXJWQ0FtVnp5aApzNU0yTGpXOWZnYzNjWU9kS0pSQzZGcWZodUMxNzZ1a3I4VVIyKytMYnQyV0tva1NSM3BpMlRWYnZ5UGN3aVdnCnMzMGEzZjAyTmFCUWJkZjMrZ1JmKzBDZ1ZkR1o3NXcrWGszWURaY1hGUFpvTzNTZUtIcFhXaGgyczRuVDdISWwKOVFXZ3dCWTJWc29XdEs5dFBzM0lXdzJTdkVoZDRzT1RhaHNUUUNWRnFJQVRNSGJOS2loRkpUNmVqYVd6WDlFTgp1bEVkdVZvOGtPR1FDbGt6VmFNT3pWa2gzb2xqWTVpUlZCUFk2S3NUWUpNZFIzTFdCa3BzcC9NZ1BRSXVOWnRSCmlmWnRZQTFGVHZOeUErWHpCaVg1eEhwcHFzV1RrS1liWVNlT21nbXIKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      url: https://do-operator-webhook-service/validate-databases-digitalocean-com-v1alpha1-databaseuserreference
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: vdatabaseuserreference.kb.io
+    namespaceSelector: {}
+    objectSelector: {}
+    rules:
+    - apiGroups:
+      - databases.digitalocean.com
+      apiVersions:
+      - v1alpha1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - databaseuserreferences
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 10
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: ValidatingWebhookConfiguration
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"admissionregistration.k8s.io/v1","kind":"ValidatingWebhookConfiguration","metadata":{"annotations":{},"labels":{"app.kubernetes.io/component":"admission-webhook","app.kubernetes.io/instance":"ingress-nginx","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"ingress-nginx","app.kubernetes.io/version":"1.1.1","helm.sh/chart":"ingress-nginx-4.0.15"},"name":"ingress-nginx-admission"},"webhooks":[{"admissionReviewVersions":["v1"],"clientConfig":{"service":{"name":"ingress-nginx-controller-admission","namespace":"ingress-nginx","path":"/networking/v1/ingresses"}},"failurePolicy":"Fail","matchPolicy":"Equivalent","name":"validate.nginx.ingress.kubernetes.io","rules":[{"apiGroups":["networking.k8s.io"],"apiVersions":["v1"],"operations":["CREATE","UPDATE"],"resources":["ingresses"]}],"sideEffects":"None","timeoutSeconds":29}]}
+    creationTimestamp: "2024-01-29T18:21:43Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/component: admission-webhook
+      app.kubernetes.io/instance: ingress-nginx
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/version: 1.1.1
+      helm.sh/chart: ingress-nginx-4.0.15
+    name: ingress-nginx-admission
+    resourceVersion: "60199"
+    uid: 66d7d214-accb-4f29-afa8-85383a682ac9
+  webhooks:
+  - admissionReviewVersions:
+    - v1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkakNDQVJ1Z0F3SUJBZ0lRRzVRdjFLWGExYzJZVkNJOEY4Z251ekFLQmdncWhrak9QUVFEQWpBUE1RMHcKQ3dZRFZRUUtFd1J1YVd3eE1DQVhEVEkwTURFeU9URTRNVFkwT0ZvWUR6SXhNalF3TVRBMU1UZ3hOalE0V2pBUApNUTB3Q3dZRFZRUUtFd1J1YVd3eE1Ga3dFd1lIS29aSXpqMENBUVlJS29aSXpqMERBUWNEUWdBRVJNaWI1d2llClN3VUdtczFBMkNlRHR0eERUekUwNjU0Yk5BK2p1L2loMDRkQXFZTTZKVTRiSzlKN01rZWs3d3dlQVN6SGhxUzIKc21OeFZEZzlscG5OL2FOWE1GVXdEZ1lEVlIwUEFRSC9CQVFEQWdJRU1CTUdBMVVkSlFRTU1Bb0dDQ3NHQVFVRgpCd01CTUE4R0ExVWRFd0VCL3dRRk1BTUJBZjh3SFFZRFZSME9CQllFRlA5ZVpNOTJXSUkrOGtWZnpxR1lWSG5RCnc5M0tNQW9HQ0NxR1NNNDlCQU1DQTBrQU1FWUNJUUMzWkptYlZMVW82czlVL0Voc2pXOUVLVU81dG4zZER5dFQKcGJvSG5Kc1R2d0loQVBUdy9UamF2UWdSSldKRlNwVTk0TStvMlN1VS9IR05rOWpveFJFMC9UcXEKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      service:
+        name: ingress-nginx-controller-admission
+        namespace: ingress-nginx
+        path: /networking/v1/ingresses
+        port: 443
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: validate.nginx.ingress.kubernetes.io
+    namespaceSelector: {}
+    objectSelector: {}
+    rules:
+    - apiGroups:
+      - networking.k8s.io
+      apiVersions:
+      - v1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - ingresses
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 29
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: ValidatingWebhookConfiguration
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: nginx-ingress
+      meta.helm.sh/release-namespace: default
+    creationTimestamp: "2024-01-29T17:48:36Z"
+    generation: 2
+    labels:
+      app.kubernetes.io/component: admission-webhook
+      app.kubernetes.io/instance: nginx-ingress
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: ingress-nginx
+      app.kubernetes.io/part-of: ingress-nginx
+      app.kubernetes.io/version: 1.9.6
+      helm.sh/chart: ingress-nginx-4.9.1
+    name: nginx-ingress-ingress-nginx-admission
+    resourceVersion: "52282"
+    uid: f32f0506-0a78-44db-8ebd-3dc7067558e2
+  webhooks:
+  - admissionReviewVersions:
+    - v1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkRENDQVJ1Z0F3SUJBZ0lRZmZuTXFyb3BzaWdaWmxTaHp1OGFPakFLQmdncWhrak9QUVFEQWpBUE1RMHcKQ3dZRFZRUUtFd1J1YVd3eE1DQVhEVEkwTURFeU9URTBNak15TUZvWUR6SXhNalF3TVRBMU1UUXlNekl3V2pBUApNUTB3Q3dZRFZRUUtFd1J1YVd3eE1Ga3dFd1lIS29aSXpqMENBUVlJS29aSXpqMERBUWNEUWdBRTRsczExYTEwCnR3d0krSkZSWG0veHZKNUJxa3VGMzkyWitzSTI2T1NCekNHRlQwUHFha2Z2NjB6eEw4WFRCRVVEbTZ6enhuMVIKcFl4VUhnYit4VjlLOXFOWE1GVXdEZ1lEVlIwUEFRSC9CQVFEQWdJRU1CTUdBMVVkSlFRTU1Bb0dDQ3NHQVFVRgpCd01CTUE4R0ExVWRFd0VCL3dRRk1BTUJBZjh3SFFZRFZSME9CQllFRkhuWldPOVVuV0J1QUMrcHZibHM5YkRCCnhwQmVNQW9HQ0NxR1NNNDlCQU1DQTBjQU1FUUNJQm12a0lPRWpPb0pQb1ptN3lieW1NU1c2SHlzSnRlOFM0YTYKMVYzM3lRU3hBaUFMMm41SVZveDNhR2dSc21zTW9uSzhNb3o5T1lqWWZINnlrbG15REkyb3NnPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      service:
+        name: nginx-ingress-ingress-nginx-controller-admission
+        namespace: default
+        path: /networking/v1/ingresses
+        port: 443
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: validate.nginx.ingress.kubernetes.io
+    namespaceSelector: {}
+    objectSelector: {}
+    rules:
+    - apiGroups:
+      - networking.k8s.io
+      apiVersions:
+      - v1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - ingresses
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 10
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: ValidatingWebhookConfiguration
+  metadata:
+    creationTimestamp: "2024-01-29T13:51:50Z"
+    generation: 1
+    labels:
+      c3.doks.digitalocean.com/component: snapshot-validation
+      c3.doks.digitalocean.com/plane: data
+      doks.digitalocean.com/managed: "true"
+    name: validation-webhook.snapshot.storage.k8s.io
+    resourceVersion: "282"
+    uid: d5b5bbc6-8ba5-442a-8d2a-4956711576bd
+  webhooks:
+  - admissionReviewVersions:
+    - v1
+    - v1beta1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVBRENDQXVpZ0F3SUJBZ0lRUEo3ZnJ0RksxVGcvUVBNUWZXRXVSekFOQmdrcWhraUc5dzBCQVFzRkFEQUEKTUI0WERUSTBNREV5T1RFek5URTFNRm9YRFRJME1EUXlPREV6TlRFMU1Gb3dBRENDQVNJd0RRWUpLb1pJaHZjTgpBUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTU5PRTR6Y3FxWDAvYlVmK3I4d2pZTXJhNDlZLzFJVEVHem5oNElDCldtSnZBUGhqVUtHdUU5dk1tSDdyU3NOdmFLUm81OFlxRkdtNmdXWHFBQ0F2VnhBbWF2bFV3bEhub3IyMjU4MUwKaVZtVkxPdTgrTTVqcHI0QkcwTEgwUytzMEpxTHZvaTdKK3FNNTJhK0h1OW9kN2g3TWdPbS9oWFRUY2VoNmgvUwp1ejNjVFFIVXd6cmhZTFMxSVhjZVNyUU0vT2lVOGtWa24xODFyMHd6K1N1bEhrcFBLSndpbXFqMjRHL2F3QjdNClFEdGYxcnphNEx5dUNvU1lxaEhKUWNSUEFvQXRCV1JVbDdPdXNRN1ZnNEdLRmpBTkdmNTExaTBqaFVHUXdQZEwKT1dnZWhQR1FPaENnRzA1T1lKYmdnWkc3c01XK21LVm5HSWZRclRzLzduOUJWOHNDQXdFQUFhT0NBWFF3Z2dGdwpNQTRHQTFVZER3RUIvd1FFQXdJSGdEQWRCZ05WSFNVRUZqQVVCZ2dyQmdFRkJRY0RBUVlJS3dZQkJRVUhBd0l3CkRBWURWUjBUQVFIL0JBSXdBRENDQVM4R0ExVWRFUUVCL3dTQ0FTTXdnZ0VmZ2hOemJtRndjMmh2ZEMxMllXeHAKWkdGMGFXOXVnamh6Ym1Gd2MyaHZkQzEyWVd4cFpHRjBhVzl1TG1NNU5ETmxNek15TFdOaU5HRXROR1F3T0MwNQpZVEEzTFdOaE5XTTBZekpsWkdGaE9ZSThjMjVoY0hOb2IzUXRkbUZzYVdSaGRHbHZiaTVqT1RRelpUTXpNaTFqCllqUmhMVFJrTURndE9XRXdOeTFqWVRWak5HTXlaV1JoWVRrdWMzWmpna1J6Ym1Gd2MyaHZkQzEyWVd4cFpHRjAKYVc5dUxtTTVORE5sTXpNeUxXTmlOR0V0TkdRd09DMDVZVEEzTFdOaE5XTTBZekpsWkdGaE9TNXpkbU11WTJ4MQpjM1JsY29KS2MyNWhjSE5vYjNRdGRtRnNhV1JoZEdsdmJpNWpPVFF6WlRNek1pMWpZalJoTFRSa01EZ3RPV0V3Ck55MWpZVFZqTkdNeVpXUmhZVGt1YzNaakxtTnNkWE4wWlhJdWJHOWpZV3d3RFFZSktvWklodmNOQVFFTEJRQUQKZ2dFQkFBcnNlTVRoaTFIWFlLaGFFcFRrcC9Dc3lOdEZ0UUF1NjQwa2UzNUlkOEJHVXNpbW4rS25xQitTQ2xRUQpTSjA1QjlMeUxhc2RCZVVHQlBGajg2Y3BJanVRT1VScUt4K0dHV3JUYXBJSDZocjBOamFpWEV2K2NsSnNSNDAxCnF0a2FOUzZmSGlvSnBHK0ZqL3pyMmdRbXlYaXhnT1RMVEtWUVRDYWZ2QUE2enZVRU5neks4cnZOTS9CYk9iL20KSzUyTlg3UW81dHJ2Q09XZWpIeGZpa2ZLSXZPYytsa3JkWElKNTlRaHY4MDBNSXkxV2hPbTVNS3FmY3huOGlVQwpUUzhqNjE5TEU0NFA4UitNb2tOc2R1MUVnVHFqTmxLQXIxWDlBTkJMcXlHNnV4LzFxbTcrcFFQaEJRL0NEQ3ZDCnR1R0djdU9Ec3V5Q0hsMTZJaDl6WHVETWNjOD0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+      url: https://snapshot-validation/volumesnapshot
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: validation-webhook.snapshot.storage.k8s.io
+    namespaceSelector: {}
+    objectSelector: {}
+    rules:
+    - apiGroups:
+      - snapshot.storage.k8s.io
+      apiVersions:
+      - v1
+      - v1beta1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - volumesnapshots
+      - volumesnapshotcontents
+      - volumesnapshotclasses
+      scope: '*'
+    sideEffects: None
+    timeoutSeconds: 15
+kind: List
+metadata:
+  resourceVersion: ""

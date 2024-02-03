@@ -36,6 +36,6 @@ export class ProjectsService {
     if (err || !data) {
       throw new DbErrors('remove', err);
     }
-    return data?.value.toObject<IProject>();
+    return data;
   }
 }

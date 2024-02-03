@@ -23,5 +23,5 @@ build:
 
 manifests:
   rawYaml:
-    - ./infra/dev/*
     - ./infra/shared/*
+    - ./infra/prod/*

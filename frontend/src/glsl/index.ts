@@ -5,6 +5,10 @@ import audio_vis_frag from "./audio_vis_frag.glsl";
 import audio_vis_frag_3 from "./audio_vis_frag_3.glsl";
 import audio_vis_ver from "./audio_vis_ver.glsl";
 import audio_vis_ver_3 from "./audio_vis_ver_3.glsl";
+import brain_frag from "./brain_frag.glsl";
+import brain_particles_frag from "./brain_particles_frag.glsl";
+import brain_particles_ver from "./brain_particles_ver.glsl";
+import brain_ver from "./brain_ver.glsl";
 import dissolve_frag from "./dissolve_frag.glsl";
 import dissolve_ver from "./dissolve_vertix.glsl";
 import interactive_particles_frag from "./int.particles.frag.glsl";
@@ -24,6 +28,10 @@ export {
   audio_vis_frag_3,
   audio_vis_ver,
   audio_vis_ver_3,
+  brain_frag,
+  brain_particles_frag,
+  brain_particles_ver,
+  brain_ver,
   dissolve_frag,
   dissolve_ver,
   interactive_particles_frag,
