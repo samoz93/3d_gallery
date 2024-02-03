@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { brainData } from "@samoz/data";
 import { brain_particles_frag, brain_particles_ver } from "@samoz/glsl";
 import { useControls } from "leva";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   AdditiveBlending,
   CatmullRomCurve3,
@@ -14,15 +14,16 @@ import {
   Vector3,
 } from "three";
 
-const SHAPE: keyof typeof brainData = "biology";
+type IShape = keyof typeof brainData;
+const scale = 9;
 
-const getPaths = (): any[] => {
-  return (brainData[SHAPE]! as any)[0].paths;
+const getPaths = (shape: IShape): any[] => {
+  return (brainData[shape]! as any)[0].paths;
 };
 
-const getBrainCurves = () => {
+const getBrainCurves = (shape: IShape) => {
   const curves: CatmullRomCurve3[] = [];
-  getPaths().forEach((item: any) => {
+  getPaths(shape).forEach((item: any) => {
     const path = [];
     for (let i = 0; i < item.length; i = i + 3) {
       path.push(new Vector3(item[i], item[i + 1], item[i + 2]));
@@ -60,7 +61,7 @@ const BrainTube = ({
   shader: ShaderMaterial;
 }) => {
   return (
-    <mesh scale={4} material={shader}>
+    <mesh scale={scale} material={shader}>
       <tubeGeometry args={[curve, 100, 0.001, 32, false]} />
     </mesh>
   );
@@ -69,12 +70,14 @@ const BrainTube = ({
 const BrainParticles = ({
   curves,
   shader,
+  shape,
 }: {
   curves: CatmullRomCurve3[];
   shader: ShaderMaterial;
+  shape: IShape;
 }) => {
   const arr = useMemo(() => {
-    const all = getPaths()
+    const all = getPaths(shape)
       .slice(2)
       .reduce((acc, item) => {
         return [...acc, ...item];
@@ -85,7 +88,7 @@ const BrainParticles = ({
   console.log(arr.length);
 
   return (
-    <points scale={4} material={shader}>
+    <points scale={scale} material={shader}>
       <bufferGeometry attach="geometry">
         <bufferAttribute
           attach={"attributes-position"}
@@ -98,7 +101,6 @@ const BrainParticles = ({
   );
 };
 export const BrainScene = ({
-  children,
   glsl,
 }: {
   children?: React.ReactNode;
@@ -107,7 +109,14 @@ export const BrainScene = ({
     fragmentShader: string;
   };
 }) => {
+  const [shape, setShape] = useState<IShape>("engineering");
   useControls({
+    object: {
+      options: Object.keys(brainData),
+      onChange: (value) => {
+        setShape(value as IShape);
+      },
+    },
     speed: {
       value: 3,
       min: 0,
@@ -179,8 +188,8 @@ export const BrainScene = ({
   }, []);
 
   const curves = useMemo(() => {
-    return getBrainCurves();
-  }, []);
+    return getBrainCurves(shape);
+  }, [shape]);
 
   useFrame(({ clock, pointer }) => {
     shader.uniforms.uTime.value = clock.getElapsedTime();
@@ -195,7 +204,12 @@ export const BrainScene = ({
       {curves.map((curve, i) => {
         return <BrainTube shader={shader} key={i.toString()} curve={curve} />;
       })}
-      <BrainParticles shader={particleShader} curves={curves} />
+      <BrainParticles
+        key={shape}
+        shape={shape}
+        shader={particleShader}
+        curves={curves}
+      />
     </>
   );
 };

@@ -2,16 +2,17 @@ apiVersion: skaffold/v4beta9
 kind: Config
 build:
   local:
-    push: true
+    push: false
   artifacts:
     - image: samoz93/gallery-frontend
       context: frontend
       docker:
         dockerfile: Dockerfile
+        target: development
       sync:
         manual:
           - src: "**/*.{ts,js,tsx,jsx,css,scss}"
-            dest: ./frontend
+            dest: ./
     - image: samoz93/gallery-api
       context: api
       docker:
@@ -23,5 +24,5 @@ build:
 
 manifests:
   rawYaml:
-    - ./infra/dev/*
     - ./infra/shared/*
+    - ./infra/dev/*

@@ -1,22 +1,37 @@
-FROM --platform=linux/amd64 node:18-alpine
+FROM node:18-alpine as base
+RUN apk add --no-cache g++ make py3-pip libc6-compat
+WORKDIR /app
+COPY package*.json pnpm-lock.yaml ./
+RUN npm install -g pnpm
+RUN pnpm install
+EXPOSE 3000
 
-RUN yarn global add pnpm
-
-WORKDIR /frontend
-
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
-
+FROM base as builder
+WORKDIR /app
 COPY . .
+RUN npm run build
 
-# ENV NODE_ENV production
 
-# RUN npm run build
+FROM base as production
+WORKDIR /app
 
-CMD ["npm", "run", "dev"]
+ENV NODE_ENV=production
+RUN pnpm install
+
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+USER nextjs
+
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/public ./public
+
+CMD npm start
+
+FROM base as development
+ENV NODE_ENV=development
+RUN pnpm install 
+COPY . .
+CMD npm run dev

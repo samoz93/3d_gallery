@@ -5,6 +5,7 @@ import {
   PlumbusSphereScene,
 } from "@samoz/app/scene_components";
 import { GoatScene } from "@samoz/app/scene_components/GoatScene";
+import { WaterStreamScene } from "@samoz/app/scene_components/WaterStream";
 import {
   audio_vis_frag,
   audio_vis_ver,
@@ -16,6 +17,8 @@ import {
   plumbus_ver,
   vibrant_frag,
   vibrant_ver,
+  water_frag,
+  water_ver,
 } from "@samoz/glsl";
 
 type GlslData = {
@@ -69,11 +72,19 @@ export const SceneData: {
   {
     title: "Brain",
     comp: BrainScene,
-    path: "ufo_scene",
-    isDev: true,
+    path: "brain_scene",
     glsl: {
       vertexShader: brain_ver,
       fragmentShader: brain_frag,
+    },
+  },
+  {
+    title: "Water Streams",
+    comp: WaterStreamScene,
+    path: "water_scene",
+    glsl: {
+      vertexShader: water_ver,
+      fragmentShader: water_frag,
     },
   },
 ];

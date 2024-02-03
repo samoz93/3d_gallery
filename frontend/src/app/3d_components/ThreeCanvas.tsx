@@ -47,8 +47,9 @@ export const ThreeCanvas = ({
         camera={{
           position: [0, 1, 5],
         }}
+        color="white"
         shadows="percentage"
-        className="h-full z-10 relative"
+        className="h-full z-10 relative bg-blue-400"
       >
         <ambientLight />
         <OrbitControls enabled={!camera.disableOrbitControls} />

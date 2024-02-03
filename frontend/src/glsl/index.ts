@@ -20,6 +20,10 @@ import plumbus_frag from "./plumbus_frag.glsl";
 import plumbus_ver from "./plumbus_ver.glsl";
 import vibrant_frag from "./vibrant_frag.glsl";
 import vibrant_ver from "./vibrant_ver.glsl";
+import water_frag from "./water_frag.glsl";
+import water_tube_frag from "./water_tube_frag.glsl";
+import water_tube_ver from "./water_tube_ver.glsl";
+import water_ver from "./water_ver.glsl";
 
 export {
   audio_vis_2_frag,
@@ -43,4 +47,8 @@ export {
   plumbus_ver,
   vibrant_frag,
   vibrant_ver,
+  water_frag,
+  water_tube_frag,
+  water_tube_ver,
+  water_ver,
 };

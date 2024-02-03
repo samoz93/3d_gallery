@@ -1,0 +1,22 @@
+controller:
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 90Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+  service:
+    type: LoadBalancer
+    annotations:
+      service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
+      service.beta.kubernetes.io/do-loadbalancer-tls-passthrough: "true"
+
+  config:
+    use-proxy-protocol: "true"
+    keep-alive-requests: "10000"
+    use-gzip: "true"
+    worker-processes: "auto"
+    upstream-keepalive-requests: "10000"
+    max-worker-connections: "65535"

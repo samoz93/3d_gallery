@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "cd auth && npm run test && cd ../tickets && npm run test && cd ../",
-    "dev": "skaffold dev"
+    "dev": "kubectl delete ingress --all --all-namespaces && kubectl apply -f ./infra/shared/namespace.yaml  && skaffold dev"
   },
   "keywords": [],
   "author": "",

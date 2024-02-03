@@ -1,5 +1,7 @@
 apiVersion: skaffold/v4beta9
 kind: Config
+deploy:
+  kubeContext: do-ams3-gall-cluster
 build:
   local:
     push: true
@@ -8,6 +10,7 @@ build:
       context: frontend
       docker:
         dockerfile: Dockerfile
+        target: production
       sync:
         manual:
           - src: "**/*.{ts,js,tsx,jsx,css,scss}"
@@ -24,4 +27,6 @@ build:
 manifests:
   rawYaml:
     - ./infra/shared/*
+    - ./infra/dev/*
+    - ./infra/cert/*
     - ./infra/prod/*
