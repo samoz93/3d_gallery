@@ -36,9 +36,6 @@ export default function Home() {
         shaders in creating amazing visual effects
         <br />
         <br />
-        This project is still a WIP and will be updated frequently
-        <br />
-        <br />
         You can start by choosing a scene from the left menu
       </p>
       <a className="text-2xl" href="" />

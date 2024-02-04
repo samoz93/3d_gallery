@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Loader } from "@samoz/app/components/Loader";
 import { folder, useControls } from "leva";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useCanvasContext } from "../stores/CanvasContext";
 
 export const ThreeCanvas = ({
@@ -38,6 +38,12 @@ export const ThreeCanvas = ({
     }
   );
 
+  const [isBloomDisabled, setIsBloom] = useState(disable);
+
+  useEffect(() => {
+    console.log("bloom", bloom);
+    setIsBloom(bloom.disable);
+  }, [bloom]);
   return (
     <div className="relative h-full w-full">
       {!isLoaded && <Loader />}
@@ -78,7 +84,7 @@ export const ThreeCanvas = ({
             <Bloom
               luminanceThreshold={threshold}
               luminanceSmoothing={smoothing}
-              intensity={disable ? 0 : intensity}
+              intensity={isBloomDisabled ? 0 : intensity}
               height={300}
             />
           </EffectComposer>

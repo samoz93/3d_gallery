@@ -4,7 +4,7 @@ import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { water_tube_frag, water_tube_ver } from "@samoz/glsl";
 import { useControls } from "leva";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   BufferAttribute,
   BufferGeometry,
@@ -16,6 +16,7 @@ import {
   Vector2,
   Vector3,
 } from "three";
+import { useCanvasContext } from "../stores/CanvasContext";
 
 const getGeometry = (count: number) => {
   const geo = new BufferGeometry();
@@ -113,8 +114,8 @@ export const WaterStreamScene = ({
   }, [glsl]);
 
   useFrame(({ clock }) => {
-    shader.uniforms.uTime.value = clock.getElapsedTime();
-    tubeShader.uniforms.uTime.value = clock.getElapsedTime();
+    shader.uniforms.uTime.value = clock.getElapsedTime() + 100;
+    tubeShader.uniforms.uTime.value = clock.getElapsedTime() + 100;
   });
 
   useTexture("../../textures/img.png", (texture) => {
@@ -135,12 +136,20 @@ export const WaterStreamScene = ({
 
   const geometryTube = useMemo(() => {
     return getTubeGeo(100);
-  }, [count]);
+  }, []);
+
+  const [, dispatch] = useCanvasContext();
+  useEffect(() => {
+    console.log("disable bloom");
+
+    dispatch({
+      type: "DISABLE_BLOOM",
+    });
+  }, []);
   return (
-    <group position={[0, 8, 0]}>
-      <points scale={3} material={shader} geometry={geometry}></points>
+    <group scale={2} position={[0, 3, -10]}>
+      <points material={shader} geometry={geometry}></points>
       <mesh
-        scale={3}
         position={[0, 0, 0]}
         geometry={geometryTube}
         material={tubeShader}

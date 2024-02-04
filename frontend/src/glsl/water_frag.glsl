@@ -27,5 +27,5 @@ void main() {
     float diffuse = max(dot(normal, lightDir), 0.);
     
     // color = mix(color,tex.rgb,diffuse);
-    gl_FragColor =  vec4(color,alpha * diffuse * .3);
+    gl_FragColor =  vec4(color,alpha * diffuse * .1);
 }
