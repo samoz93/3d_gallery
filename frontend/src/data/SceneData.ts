@@ -2,6 +2,7 @@ import {
   AudioVisScene,
   BrainScene,
   DancerScene,
+  PlayfulChildren,
   PlumbusSphereScene,
 } from "@samoz/app/scene_components";
 import { GoatScene } from "@samoz/app/scene_components/GoatScene";
@@ -13,8 +14,10 @@ import {
   brain_ver,
   dissolve_frag,
   dissolve_ver,
+  playful_frag,
   plumbus_frag,
   plumbus_ver,
+  raymarch_ver,
   vibrant_frag,
   vibrant_ver,
   water_frag,
@@ -85,6 +88,15 @@ export const SceneData: {
     glsl: {
       vertexShader: water_ver,
       fragmentShader: water_frag,
+    },
+  },
+  {
+    title: "Playfulness",
+    comp: PlayfulChildren,
+    path: "playful_children",
+    glsl: {
+      vertexShader: raymarch_ver,
+      fragmentShader: playful_frag,
     },
   },
 ];

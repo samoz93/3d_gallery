@@ -168,7 +168,7 @@ export const WaterStreamScene = ({
       smoothing: 0,
       threshold: 0,
     });
-    update.updateField({ showPlane: false });
+    update.updateField({ showPlane: false, enableOrbit: true });
 
     return () => {
       update.restoreDefault();

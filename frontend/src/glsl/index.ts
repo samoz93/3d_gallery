@@ -16,8 +16,11 @@ import interactive_particles_vertix from "./int.particles.vert.glsl";
 import interactive_sim_frag from "./int.plane.frag.glsl";
 import interactive_sim_frag_turkey from "./int.plane.frag.turkey.glsl";
 import interactive_sim_vertix from "./int.plane.vert.glsl";
+import playful_frag from "./playful_children_frag.glsl";
 import plumbus_frag from "./plumbus_frag.glsl";
 import plumbus_ver from "./plumbus_ver.glsl";
+import raymarch_frag from "./raymarch_frag.glsl";
+import raymarch_ver from "./raymarch_ver.glsl";
 import vibrant_frag from "./vibrant_frag.glsl";
 import vibrant_ver from "./vibrant_ver.glsl";
 import water_bg_frag from "./water_bg_frag.glsl";
@@ -26,7 +29,6 @@ import water_frag from "./water_frag.glsl";
 import water_tube_frag from "./water_tube_frag.glsl";
 import water_tube_ver from "./water_tube_ver.glsl";
 import water_ver from "./water_ver.glsl";
-
 export {
   audio_vis_2_frag,
   audio_vis_2_ver,
@@ -45,8 +47,11 @@ export {
   interactive_sim_frag,
   interactive_sim_frag_turkey,
   interactive_sim_vertix,
+  playful_frag,
   plumbus_frag,
   plumbus_ver,
+  raymarch_frag,
+  raymarch_ver,
   vibrant_frag,
   vibrant_ver,
   water_bg_frag,

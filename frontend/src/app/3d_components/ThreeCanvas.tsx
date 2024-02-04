@@ -5,6 +5,7 @@ import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Loader } from "@samoz/app/components/Loader";
 import { folder, useControls } from "leva";
 import { ReactNode, useEffect, useState } from "react";
+import { Vector3Tuple } from "three";
 import { useZStore } from "../stores/zStore";
 
 export const ThreeCanvas = ({
@@ -44,6 +45,8 @@ export const ThreeCanvas = ({
       },
     });
   }, [ctrl]);
+
+  const cameraPos: Vector3Tuple = field.perspective ? [0, 1, 5] : [0, 0, 5];
   return (
     <div className="relative h-full w-full">
       {!isLoaded && <Loader />}
@@ -51,14 +54,16 @@ export const ThreeCanvas = ({
       <Canvas
         onCreated={() => setIsLoaded(true)}
         camera={{
-          position: [0, 1, 5],
+          position: cameraPos,
+          zoom: field.perspective ? 1 : 50,
         }}
+        orthographic={!field.perspective}
         color="white"
         shadows="percentage"
         className="h-full z-10 relative bg-blue-400"
       >
         <ambientLight />
-        <OrbitControls enabled={false} />
+        <OrbitControls enabled={field.enableOrbit} />
         <directionalLight
           castShadow
           color={"white"}
@@ -70,7 +75,7 @@ export const ThreeCanvas = ({
         {/* <Sky /> */}
         <mesh
           receiveShadow
-          visible={field.showPlane}
+          visible={field.showPlane && field.perspective}
           rotation={[-Math.PI * 0.5, 0, 0]}
           position={[0, -2, 0]}
         >
