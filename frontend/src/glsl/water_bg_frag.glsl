@@ -19,6 +19,6 @@ void main() {
     alpha = min(c,c1);
     // alpha = pow(alpha, 3.0);
     color = vec3(alpha);
-    float depth = smoothstep(.0, 4.1, abs(vUv.y));
+    float depth = smoothstep(.1, 3.1, abs(vUv.y));
     gl_FragColor =  vec4(color,alpha * depth * .1 );
 }

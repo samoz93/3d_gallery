@@ -172,7 +172,7 @@ export const WaterStreamScene = ({
     };
   }, []);
   return (
-    <group scale={0.6} position={[0, 0, -1]}>
+    <group scale={1} position={[0, 0, -1]}>
       <points material={shader} geometry={geometry}></points>
       <mesh
         position={[0, 0, 0]}
