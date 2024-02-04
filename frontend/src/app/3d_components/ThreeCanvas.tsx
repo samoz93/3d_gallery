@@ -5,7 +5,7 @@ import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import { Loader } from "@samoz/app/components/Loader";
 import { folder, useControls } from "leva";
 import { ReactNode, useEffect, useState } from "react";
-import { useCanvasContext } from "../stores/CanvasContext";
+import { useZStore } from "../stores/zStore";
 
 export const ThreeCanvas = ({
   children,
@@ -19,31 +19,31 @@ export const ThreeCanvas = ({
   };
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-
-  const [{ camera, bloom }] = useCanvasContext();
-
-  const { intensity, smoothing, threshold, disable } = useControls(
-    "Main Scene",
-    {
-      bloom: folder({
-        intensity: {
-          value: bloom.intensity,
-          min: 0,
-          max: 10,
-        },
-        threshold: { value: bloom.threshold || 0.4, min: 0, max: 1 },
-        smoothing: { value: bloom.smoothing || 0.1, min: 0, max: 1 },
-        disable: !!bloom.disable,
-      }),
-    }
-  );
-
-  const [isBloomDisabled, setIsBloom] = useState(disable);
+  const bloom = useZStore((state) => state.bloom);
+  const field = useZStore((state) => state.filed);
+  const ctrl = useControls("Main Scene", {
+    bloom: folder({
+      intensity: {
+        value: bloom.intensity,
+        min: 0,
+        max: 10,
+      },
+      threshold: { value: bloom.threshold || 0.4, min: 0, max: 1 },
+      smoothing: { value: bloom.smoothing || 0.1, min: 0, max: 1 },
+      disable: bloom.disable,
+    }),
+  });
 
   useEffect(() => {
-    console.log("bloom", bloom);
-    setIsBloom(bloom.disable);
-  }, [bloom]);
+    useZStore.setState({
+      bloom: {
+        intensity: ctrl.intensity,
+        threshold: ctrl.threshold,
+        smoothing: ctrl.smoothing,
+        disable: ctrl.disable,
+      },
+    });
+  }, [ctrl]);
   return (
     <div className="relative h-full w-full">
       {!isLoaded && <Loader />}
@@ -58,7 +58,7 @@ export const ThreeCanvas = ({
         className="h-full z-10 relative bg-blue-400"
       >
         <ambientLight />
-        <OrbitControls enabled={!camera.disableOrbitControls} />
+        <OrbitControls enabled={false} />
         <directionalLight
           castShadow
           color={"white"}
@@ -70,6 +70,7 @@ export const ThreeCanvas = ({
         {/* <Sky /> */}
         <mesh
           receiveShadow
+          visible={field.showPlane}
           rotation={[-Math.PI * 0.5, 0, 0]}
           position={[0, -2, 0]}
         >
@@ -77,14 +78,14 @@ export const ThreeCanvas = ({
           <meshPhysicalMaterial color="black" />
         </mesh>
 
-        {disable ? (
+        {bloom.disable ? (
           <></>
         ) : (
           <EffectComposer>
             <Bloom
-              luminanceThreshold={threshold}
-              luminanceSmoothing={smoothing}
-              intensity={isBloomDisabled ? 0 : intensity}
+              luminanceThreshold={bloom.threshold}
+              luminanceSmoothing={bloom.smoothing}
+              intensity={bloom.disable ? 0 : bloom.intensity}
               height={300}
             />
           </EffectComposer>

@@ -31,7 +31,8 @@
     "styled-components": "^6.1.6",
     "swr": "^2.2.4",
     "three": "^0.160.0",
-    "three-custom-shader-material": "^5.4.0"
+    "three-custom-shader-material": "^5.4.0",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@types/node": "^20",

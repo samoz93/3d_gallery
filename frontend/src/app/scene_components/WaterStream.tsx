@@ -2,7 +2,12 @@
 
 import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { water_tube_frag, water_tube_ver } from "@samoz/glsl";
+import {
+  water_bg_frag,
+  water_bg_ver,
+  water_tube_frag,
+  water_tube_ver,
+} from "@samoz/glsl";
 import { useControls } from "leva";
 import { useEffect, useMemo } from "react";
 import {
@@ -16,7 +21,7 @@ import {
   Vector2,
   Vector3,
 } from "three";
-import { useCanvasContext } from "../stores/CanvasContext";
+import { useZStore } from "../stores/zStore";
 
 const getGeometry = (count: number) => {
   const geo = new BufferGeometry();
@@ -111,11 +116,24 @@ export const WaterStreamScene = ({
         uTime: { value: 0 },
       },
     });
-  }, [glsl]);
+  }, []);
+
+  const backgroundMaterial = useMemo(() => {
+    return new ShaderMaterial({
+      vertexShader: water_bg_ver,
+      fragmentShader: water_bg_frag,
+      transparent: true,
+      uniforms: {
+        uTexture: { value: new Texture() },
+        uTime: { value: 0 },
+      },
+    });
+  }, []);
 
   useFrame(({ clock }) => {
     shader.uniforms.uTime.value = clock.getElapsedTime() + 100;
     tubeShader.uniforms.uTime.value = clock.getElapsedTime() + 100;
+    backgroundMaterial.uniforms.uTime.value = clock.getElapsedTime() + 100;
   });
 
   useTexture("../../textures/img.png", (texture) => {
@@ -129,6 +147,10 @@ export const WaterStreamScene = ({
     tubeShader.uniforms.uWaterTexture.value = texture;
   });
 
+  useTexture("../../textures/noise.jpg", (texture) => {
+    backgroundMaterial.uniforms.uTexture.value = texture;
+  });
+
   const count = 10000;
   const geometry = useMemo(() => {
     return getGeometry(count);
@@ -138,22 +160,31 @@ export const WaterStreamScene = ({
     return getTubeGeo(100);
   }, []);
 
-  const [, dispatch] = useCanvasContext();
+  const update = useZStore((state) => state);
   useEffect(() => {
-    console.log("disable bloom");
-
-    dispatch({
-      type: "DISABLE_BLOOM",
+    update.updateBloom({
+      disable: true,
+      intensity: 0,
+      smoothing: 0,
+      threshold: 0,
     });
+    update.updateField({ showPlane: false });
+
+    return () => {
+      update.restoreDefault();
+    };
   }, []);
   return (
-    <group scale={2} position={[0, 3, -10]}>
+    <group scale={0.6} position={[0, 0, -1]}>
       <points material={shader} geometry={geometry}></points>
       <mesh
         position={[0, 0, 0]}
         geometry={geometryTube}
         material={tubeShader}
       />
+      <mesh position={[0, 0, -5]} material={backgroundMaterial}>
+        <planeGeometry args={[50, 50]} />
+      </mesh>
     </group>
   );
 };

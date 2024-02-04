@@ -20,6 +20,8 @@ import plumbus_frag from "./plumbus_frag.glsl";
 import plumbus_ver from "./plumbus_ver.glsl";
 import vibrant_frag from "./vibrant_frag.glsl";
 import vibrant_ver from "./vibrant_ver.glsl";
+import water_bg_frag from "./water_bg_frag.glsl";
+import water_bg_ver from "./water_bg_ver.glsl";
 import water_frag from "./water_frag.glsl";
 import water_tube_frag from "./water_tube_frag.glsl";
 import water_tube_ver from "./water_tube_ver.glsl";
@@ -47,6 +49,8 @@ export {
   plumbus_ver,
   vibrant_frag,
   vibrant_ver,
+  water_bg_frag,
+  water_bg_ver,
   water_frag,
   water_tube_frag,
   water_tube_ver,
