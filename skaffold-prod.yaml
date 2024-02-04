@@ -27,6 +27,4 @@ build:
 manifests:
   rawYaml:
     - ./infra/shared/*
-    - ./infra/dev/*
-    - ./infra/cert/*
     - ./infra/prod/*

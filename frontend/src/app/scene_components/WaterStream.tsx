@@ -11,6 +11,7 @@ import {
   CatmullRomCurve3,
   Color,
   ShaderMaterial,
+  Texture,
   TubeGeometry,
   Vector2,
   Vector3,
@@ -50,7 +51,7 @@ const getTubeGeo = (count: number) => {
     );
   });
   const curve = new CatmullRomCurve3(points);
-  return new TubeGeometry(curve, count, 0.1, 100, true);
+  return new TubeGeometry(curve, count, 0.5, 100, true);
 };
 export const WaterStreamScene = ({
   glsl,
@@ -73,9 +74,7 @@ export const WaterStreamScene = ({
   });
   const uniforms = useMemo(() => {
     return {
-      uTime: { value: 0 },
       uSpeed: { value: 3 },
-      uTexture: { value: null },
       uMouse: {
         value: new Vector2(0, 0),
       },
@@ -93,7 +92,8 @@ export const WaterStreamScene = ({
       blending: 5,
       uniforms: {
         uColor: { value: new Color("blue") },
-        ...uniforms,
+        uTexture: { value: null },
+        uTime: { value: 0 },
       },
     });
   }, [glsl]);
@@ -102,21 +102,23 @@ export const WaterStreamScene = ({
     return new ShaderMaterial({
       vertexShader: water_tube_ver,
       fragmentShader: water_tube_frag,
+      transparent: true,
       uniforms: {
         uColor: { value: new Color("blue") },
-        uWaterTexture: { value: null },
-
-        ...uniforms,
+        uWaterTexture: { value: new Texture() },
+        uTexture: { value: new Texture() },
+        uTime: { value: 0 },
       },
     });
   }, [glsl]);
 
-  useFrame(({ clock, pointer }) => {
+  useFrame(({ clock }) => {
     shader.uniforms.uTime.value = clock.getElapsedTime();
     tubeShader.uniforms.uTime.value = clock.getElapsedTime();
   });
+
   useTexture("../../textures/img.png", (texture) => {
-    tubeShader.uniforms.uTexture.value = texture;
+    shader.uniforms.uTexture.value = texture;
   });
 
   useTexture("../../textures/dust.webp", (texture) => {
