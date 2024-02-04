@@ -113,12 +113,13 @@ export const BrainScene = ({
   useControls({
     object: {
       options: Object.keys(brainData),
+      value: "economics",
       onChange: (value) => {
         setShape(value as IShape);
       },
     },
     speed: {
-      value: 3,
+      value: 2,
       min: 0,
       max: 10,
       onChange: (value) => {
@@ -126,7 +127,7 @@ export const BrainScene = ({
       },
     },
     segment: {
-      value: 30,
+      value: 34,
       min: 0,
       max: 100,
       onChange: (value) => {
@@ -134,7 +135,7 @@ export const BrainScene = ({
       },
     },
     xy: {
-      value: [1, 1],
+      value: [1.8, 0.2],
       onChange: (value) => {
         uniforms.uX.value = value[0];
         uniforms.uY.value = value[1];
@@ -200,7 +201,7 @@ export const BrainScene = ({
     shader.uniforms.uMouse.value.y = pointer.y;
   });
   return (
-    <>
+    <group scale={2}>
       {curves.map((curve, i) => {
         return <BrainTube shader={shader} key={i.toString()} curve={curve} />;
       })}
@@ -210,6 +211,6 @@ export const BrainScene = ({
         shader={particleShader}
         curves={curves}
       />
-    </>
+    </group>
   );
 };

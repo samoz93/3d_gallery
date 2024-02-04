@@ -3,6 +3,7 @@ varying vec3 vNormal;
 uniform float uTime;
 attribute vec3 aRandom;
 attribute float size;
+uniform float uSpeed;
 
 const float PI = 3.14159265359;
 
@@ -56,7 +57,8 @@ vec3 getNormal(float progress){
 
 void main() {
     vec3 pos = position;
-    float progress = fract(uTime * .08 + aRandom.x  );
+    float time = uTime  * .08 * uSpeed;
+    float progress = fract(time + aRandom.x  );
     pos =  getPos(progress);
     vec3 normal = getNormal(progress);
     vec3 tangent = getTangent(progress);

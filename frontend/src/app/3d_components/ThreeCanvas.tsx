@@ -53,6 +53,7 @@ export const ThreeCanvas = ({
 
       <Canvas
         onCreated={() => setIsLoaded(true)}
+        style={{ background: "#064273" }}
         camera={{
           position: cameraPos,
           zoom: field.perspective ? 1 : 50,
@@ -60,7 +61,7 @@ export const ThreeCanvas = ({
         orthographic={!field.perspective}
         color="white"
         shadows="percentage"
-        className="h-full z-10 relative bg-blue-400"
+        className="h-full z-10 relative"
       >
         <ambientLight />
         <OrbitControls enabled={field.enableOrbit} />

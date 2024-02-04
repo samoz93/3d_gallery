@@ -18,7 +18,7 @@ export const PlayfulChildren = ({
     fragmentShader: string;
   };
 }) => {
-  const aspect = 853 / 1200;
+  const aspect = 1 / 2;
   useControls("Playfulness color mixer", {
     uColor: {
       value: "#dfff00",
@@ -107,7 +107,9 @@ export const PlayfulChildren = ({
       <OrbitControls makeDefault />
       <group scale={1} position={[0, 0, -1]}>
         <mesh material={shader}>
-          <planeGeometry args={[viewport.width, viewport.height, 1]} />
+          <planeGeometry
+            args={[viewport.width * aspect, viewport.width * aspect, 1]}
+          />
         </mesh>
       </group>
     </>

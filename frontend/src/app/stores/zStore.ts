@@ -10,6 +10,7 @@ type FieldConfig = {
   showPlane: boolean;
   enableOrbit: boolean;
   perspective: boolean;
+  bgColor: string;
 };
 type StoreType = {
   bloom: BloomConfig;
@@ -33,6 +34,7 @@ export const zDefaults = {
     showPlane: true,
     enableOrbit: true,
     perspective: true,
+    bgColor: "#00cfff",
   },
 };
 export const useZStore = create<Actions & StoreType>((set) => ({

@@ -18,7 +18,6 @@ import {
   ShaderMaterial,
   Texture,
   TubeGeometry,
-  Vector2,
   Vector3,
 } from "three";
 import { useZStore } from "../stores/zStore";
@@ -70,22 +69,17 @@ export const WaterStreamScene = ({
 }) => {
   useControls({
     speed: {
-      value: 3,
+      value: 0.8,
       min: 0,
       max: 10,
       onChange: (value) => {
-        uniforms.uSpeed.value = value;
+        shader.uniforms.uSpeed.value = value;
+        backgroundMaterial.uniforms.uSpeed.value = value;
+        tubeShader.uniforms.uSpeed.value = value;
       },
     },
   });
-  const uniforms = useMemo(() => {
-    return {
-      uSpeed: { value: 3 },
-      uMouse: {
-        value: new Vector2(0, 0),
-      },
-    };
-  }, []);
+
   const shader = useMemo(() => {
     return new ShaderMaterial({
       vertexShader: glsl.vertexShader,
@@ -100,6 +94,7 @@ export const WaterStreamScene = ({
         uColor: { value: new Color("blue") },
         uTexture: { value: null },
         uTime: { value: 0 },
+        uSpeed: { value: 0.8 },
       },
     });
   }, [glsl]);
@@ -114,6 +109,7 @@ export const WaterStreamScene = ({
         uWaterTexture: { value: new Texture() },
         uTexture: { value: new Texture() },
         uTime: { value: 0 },
+        uSpeed: { value: 0.8 },
       },
     });
   }, []);
@@ -126,6 +122,7 @@ export const WaterStreamScene = ({
       uniforms: {
         uTexture: { value: new Texture() },
         uTime: { value: 0 },
+        uSpeed: { value: 0.8 },
       },
     });
   }, []);
@@ -151,7 +148,7 @@ export const WaterStreamScene = ({
     backgroundMaterial.uniforms.uTexture.value = texture;
   });
 
-  const count = 10000;
+  const count = 200;
   const geometry = useMemo(() => {
     return getGeometry(count);
   }, [count]);

@@ -88,9 +88,9 @@ void main() {
     vec3 c2 = uColor2;
     vec3 c3 = uColor3;
     vec3 c4 = uColor4;
-    vec3 plt = pallate(t * .03, c1, c2, c3, c4);
+    vec3 plt = pallate(t * .1, c1, c2, c3, c4);
 
-    vec3 color = vec3(plt * .2 * float(i) / 20.0);
-
-    gl_FragColor =  vec4(color, 1.);
+    vec3 color = vec3(plt * 1.1 * float(i ) / 50.0);
+    float alpha = smoothstep(1., .1, t * .1);
+    gl_FragColor =  vec4(color, alpha);
 }

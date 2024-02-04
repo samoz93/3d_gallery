@@ -9,11 +9,11 @@ export const MainNav = () => {
   });
 
   return (
-    <nav className="p-5 flex flex-col justify-evenly items-stretch text-center gap-5 w-1/8 min-w-12 h-full">
-      {scene.map((scene) => (
+    <nav className="p-5 flex-col text-center w-1/8 min-w-12 h-full overflow-scroll">
+      {scene.reverse().map((scene) => (
         <Link
           key={scene.path}
-          className="flex cursor-pointer items-center justify-items-center w-full h-full"
+          className="flex cursor-pointer h-40 mt-5 items-center justify-items-center w-full"
           href={`/scenes/${scene.path}`}
         >
           <GlowingDiv>{scene.title}</GlowingDiv>

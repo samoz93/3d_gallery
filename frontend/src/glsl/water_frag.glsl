@@ -3,7 +3,7 @@ uniform vec3 uColor;
 varying vec2 vUv;
 uniform sampler2D uTexture;
 varying vec3 vNormal;
-
+uniform float uSpeed;
 
 
 void main() {
