@@ -19,7 +19,7 @@ export const PlayfulChildren = ({
   };
 }) => {
   const aspect = 853 / 1200;
-  useControls("PlayfulChildren", {
+  useControls("Playfulness color mixer", {
     uColor: {
       value: "#dfff00",
       label: "Color 1",
