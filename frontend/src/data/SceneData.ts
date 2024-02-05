@@ -7,6 +7,7 @@ import {
   RayMarchingScene,
 } from "@samoz/app/scene_components";
 import { GoatScene } from "@samoz/app/scene_components/GoatScene";
+import { ScreenSaverScene } from "@samoz/app/scene_components/ScreenSaverScene";
 import { WaterStreamScene } from "@samoz/app/scene_components/WaterStream";
 import {
   audio_vis_frag,
@@ -20,6 +21,8 @@ import {
   plumbus_ver,
   raymarch_frag,
   raymarch_ver,
+  screen_saver_frag,
+  screen_saver_ver,
   vibrant_frag,
   vibrant_ver,
   water_frag,
@@ -108,6 +111,15 @@ export const SceneData: {
     glsl: {
       vertexShader: raymarch_ver,
       fragmentShader: raymarch_frag,
+    },
+  },
+  {
+    title: "Screen Saver",
+    comp: ScreenSaverScene,
+    path: "screen_saver",
+    glsl: {
+      vertexShader: screen_saver_ver,
+      fragmentShader: screen_saver_frag,
     },
   },
 ];
