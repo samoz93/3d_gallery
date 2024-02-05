@@ -83,7 +83,6 @@ export const RayMarchingScene = ({
       shader.uniforms.uMouse.value.y = y;
     };
     window.addEventListener("pointermove", pointerEvents);
-    console.log("resolution", resolution, gl);
 
     return () => {
       window.removeEventListener("pointermove", pointerEvents);

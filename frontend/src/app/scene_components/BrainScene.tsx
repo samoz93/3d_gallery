@@ -85,8 +85,6 @@ const BrainParticles = ({
     return Float32Array.from(all);
   }, []);
 
-  console.log(arr.length);
-
   return (
     <points scale={scale} material={shader}>
       <bufferGeometry attach="geometry">

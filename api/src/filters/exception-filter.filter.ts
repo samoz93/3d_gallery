@@ -8,8 +8,6 @@ export class SamozExceptionFilter implements ExceptionFilter<SamozError> {
     const response = ctx.getResponse();
     const status = exception.httpErrorCode || 500;
 
-    console.log('exception', exception);
-
     response.status(status).json({
       statusCode: status,
       message: exception.message,

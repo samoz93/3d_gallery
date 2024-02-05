@@ -10,16 +10,10 @@ export default function Home() {
       // mode: "no-cors",
     })
       .then((res) => {
-        console.log("res", res);
-
         return res.text();
       })
-      .then((data) => {
-        console.log("data", data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((data) => {})
+      .catch((err) => {});
   };
 
   return (
