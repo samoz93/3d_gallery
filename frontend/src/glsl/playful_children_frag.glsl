@@ -67,9 +67,9 @@ vec3 pallate(float t, vec3 a, vec3 b, vec3 c, vec3 d) {
 }
 
 void main() {
-    vec2 newUv = (vUv - vec2(0.5));
-    vec3 rayPos = vec3(0., 0., -2.);
-    vec3 rayDir = normalize(vec3(newUv, 1.));
+    vec2 newUv = (vUv - vec2(0.5)) * uResolution.xy/ uResolution.y;
+    vec3 rayPos = vec3(0., 0., 3.);
+    vec3 rayDir = normalize(vec3(newUv, -1.5));
 
     float t = 0.;
     int i;
@@ -88,9 +88,9 @@ void main() {
     vec3 c2 = uColor2;
     vec3 c3 = uColor3;
     vec3 c4 = uColor4;
-    vec3 plt = pallate(t * .1, c1, c2, c3, c4);
+    vec3 plt = pallate(t * 1.4, c1, c2, c3, c4);
 
-    vec3 color = vec3(plt * 1.1 * float(i ) / 50.0);
+    vec3 color = vec3(plt * .1 * float(i) * 0.03);
     float alpha = smoothstep(1., .1, t * .1);
     gl_FragColor =  vec4(color, alpha);
 }

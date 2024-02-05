@@ -1,15 +1,18 @@
 "use client";
 
-import { OrbitControls, OrthographicCamera } from "@react-three/drei";
+import {
+  OrbitControls,
+  OrthographicCamera,
+  useTexture,
+} from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useControls } from "leva";
 import { useEffect, useMemo } from "react";
-import { Color, ShaderMaterial } from "three";
+import { ShaderMaterial, Vector2 } from "three";
 import { useZStore } from "../stores/zStore";
 
 const { sin, cos } = Math;
 
-export const PlayfulChildren = ({
+export const RayMarchingScene = ({
   glsl,
 }: {
   children?: React.ReactNode;
@@ -18,37 +21,7 @@ export const PlayfulChildren = ({
     fragmentShader: string;
   };
 }) => {
-  const aspect = 1 / 2;
-  useControls("Playfulness color mixer", {
-    uColor: {
-      value: "#dfff00",
-      label: "Color 1",
-      onChange: (v) => {
-        shader.uniforms.uColor.value = new Color(v);
-      },
-    },
-    uColor2: {
-      value: "#0000ff",
-      label: "Color 2",
-      onChange: (v) => {
-        shader.uniforms.uColor2.value = new Color(v);
-      },
-    },
-    uColor3: {
-      value: "#000003",
-      label: "Color 2",
-      onChange: (v) => {
-        shader.uniforms.uColor3.value = new Color(v);
-      },
-    },
-    uColor4: {
-      value: "#e52e2e",
-      label: "Color 2",
-      onChange: (v) => {
-        shader.uniforms.uColor4.value = new Color(v);
-      },
-    },
-  });
+  const aspect = 1;
   const resolution = useMemo(() => {
     const width = window.innerWidth;
     const height = window.innerHeight;
@@ -77,16 +50,18 @@ export const PlayfulChildren = ({
         uTexture: { value: null },
         uTime: { value: 0 },
         uResolution: { value: resolution },
-        uColor: { value: new Color("#0000ff") },
-        uColor2: { value: new Color("#ff0000") },
-        uColor3: { value: new Color("#0000ff") },
-        uColor4: { value: new Color("#ff0000") },
+        uMouse: { value: new Vector2(0) },
+        uProgress: { value: 0 },
       },
     });
   }, [glsl]);
 
   useFrame(({ clock }) => {
     shader.uniforms.uTime.value = clock.getElapsedTime() + 100;
+  });
+
+  useTexture("../../textures/fire2.png", (tex) => {
+    shader.uniforms.uTexture.value = tex;
   });
 
   const { updateBloom, updateField } = useZStore((state) => state);
@@ -99,15 +74,30 @@ export const PlayfulChildren = ({
       perspective: false,
       enableOrbit: false,
     });
+
+    const pointerEvents = (e: PointerEvent) => {
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = -e.clientY / window.innerHeight + 0.5;
+      shader.uniforms.uMouse.value.x = x;
+      shader.uniforms.uMouse.value.y = y;
+    };
+    window.addEventListener("pointermove", pointerEvents);
+
+    return () => {
+      // window.removeEventListener("pointermove", pointerEvents);
+    };
   }, []);
   const { viewport } = useThree();
+
   return (
     <>
       <OrthographicCamera makeDefault zoom={50} />
       <OrbitControls makeDefault />
       <group scale={1} position={[0, 0, -1]}>
         <mesh material={shader}>
-          <planeGeometry args={[viewport.width, viewport.height, 1]} />
+          <planeGeometry
+            args={[viewport.width * aspect, viewport.height * aspect, 1]}
+          />
         </mesh>
       </group>
     </>

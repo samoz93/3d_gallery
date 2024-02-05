@@ -4,6 +4,7 @@ import {
   DancerScene,
   PlayfulChildren,
   PlumbusSphereScene,
+  RayMarchingScene,
 } from "@samoz/app/scene_components";
 import { GoatScene } from "@samoz/app/scene_components/GoatScene";
 import { WaterStreamScene } from "@samoz/app/scene_components/WaterStream";
@@ -17,6 +18,7 @@ import {
   playful_frag,
   plumbus_frag,
   plumbus_ver,
+  raymarch_frag,
   raymarch_ver,
   vibrant_frag,
   vibrant_ver,
@@ -97,6 +99,15 @@ export const SceneData: {
     glsl: {
       vertexShader: raymarch_ver,
       fragmentShader: playful_frag,
+    },
+  },
+  {
+    title: "Ray Marching",
+    comp: RayMarchingScene,
+    path: "ray_marching",
+    glsl: {
+      vertexShader: raymarch_ver,
+      fragmentShader: raymarch_frag,
     },
   },
 ];
