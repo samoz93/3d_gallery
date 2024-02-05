@@ -65,6 +65,7 @@ export const RayMarchingScene = ({
   });
 
   const { updateBloom, updateField } = useZStore((state) => state);
+  const { gl, viewport } = useThree();
   useEffect(() => {
     updateBloom({
       disable: true,
@@ -82,12 +83,12 @@ export const RayMarchingScene = ({
       shader.uniforms.uMouse.value.y = y;
     };
     window.addEventListener("pointermove", pointerEvents);
+    console.log("resolution", resolution, gl);
 
     return () => {
-      // window.removeEventListener("pointermove", pointerEvents);
+      window.removeEventListener("pointermove", pointerEvents);
     };
   }, []);
-  const { viewport } = useThree();
 
   return (
     <>

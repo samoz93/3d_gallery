@@ -38,10 +38,10 @@ float opSmoothIntersection( float d1, float d2, float k ) {
 
 float map(vec3 p) {
   float radius = .2;
-  float range = .40;
-  float move = (sin(uTime* .3) * range - .8 * range) *  (cos(uTime* 2.) * range - .5 * range * .5);
-  vec3 sPos = vec3(move,move + .5,move );
-//   vec3 bPos = vec3(sin(uTime) * .1, 0., .0);
+  float range = .6;
+  float move = (sin(uTime* .9) * range - .5 * range) *  (cos(uTime* 3.) * range - .5 * range * .5);
+  vec3 sPos = vec3(move,move,move );
+  vec3 bPos = vec3(move * .3,move * .3,move * .5);
 
   vec3 q = p;
 
@@ -50,6 +50,7 @@ float map(vec3 p) {
 //   q = fract(q * .5) - .5;
 //   q -= vec3(0., 0., .5);
   q.xz *= rot2D(+uTime);
+  q.xy *= rot2D(+uTime);
 
   // Sphere
   p.yz *= rot2D(cos(uTime)  * 1.);
@@ -57,7 +58,7 @@ float map(vec3 p) {
 
 //   p.z += -.5;
   float sphere = sdSphere(p - sPos, radius);
-  float box = sdBox(q, vec3(radius));
+  float box = sdBox(q+bPos, vec3(radius));
 
   return opSmoothUnion(box, sphere,.3);
 }
@@ -88,9 +89,9 @@ void main() {
     vec3 c2 = uColor2;
     vec3 c3 = uColor3;
     vec3 c4 = uColor4;
-    vec3 plt = pallate(t * 1.4, c1, c2, c3, c4);
+    vec3 plt = pallate(t * 1.2, c1, c2, c3, c4);
 
-    vec3 color = vec3(plt * .1 * float(i) * 0.03);
+    vec3 color = vec3(plt * .3 + plt * .7 * float(i) * .01);
     float alpha = smoothstep(1., .1, t * .1);
     gl_FragColor =  vec4(color, alpha);
 }

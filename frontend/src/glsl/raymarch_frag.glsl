@@ -63,7 +63,7 @@ float map(vec3 p) {
   // vec3 sPos = vec3(move,move + .5,move );
   // vec3 bPos = vec3(0.,sin(uTime) * .8, .0);
   // vec3 sPos = vec3(0.,sin(uTime) * .4, .0);
-  vec2 newMouse = (uMouse + vec2(-radius,-radius * .25)) * uResolution.zw;
+  vec2 newMouse = uMouse * 3.;// (uMouse + vec2(-radius,-radius * .25)) * uResolution.zw;
   // newMouse.y += radius;
   vec3 boxVec = p;
   // p = mod(p,.5) - .25;

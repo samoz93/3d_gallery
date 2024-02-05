@@ -180,7 +180,7 @@ export const WaterStreamScene = ({
         material={tubeShader}
       />
       <mesh position={[0, 0, -5]} material={backgroundMaterial}>
-        <planeGeometry args={[50, 50]} />
+        <boxGeometry args={[50, 50, 50, 10, 10]} />
       </mesh>
     </group>
   );
