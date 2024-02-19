@@ -1,0 +1,11 @@
+Model Information:
+* title:	Female bust
+* source:	https://sketchfab.com/3d-models/female-bust-be9aa9d273204f8786517541238154d1
+* author:	kuroru (https://sketchfab.com/kuroru0)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Female bust" (https://sketchfab.com/3d-models/female-bust-be9aa9d273204f8786517541238154d1) by kuroru (https://sketchfab.com/kuroru0) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

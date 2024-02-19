@@ -2,6 +2,7 @@ import {
   AudioVisScene,
   BrainScene,
   DancerScene,
+  FancyScroll,
   PlayfulChildren,
   PlumbusSphereScene,
   RayMarchingScene,
@@ -16,6 +17,8 @@ import {
   brain_ver,
   dissolve_frag,
   dissolve_ver,
+  fancy_scroll_frag,
+  fancy_scroll_ver,
   playful_frag,
   plumbus_frag,
   plumbus_ver,
@@ -120,6 +123,15 @@ export const SceneData: {
     glsl: {
       vertexShader: screen_saver_ver,
       fragmentShader: screen_saver_frag,
+    },
+  },
+  {
+    title: "Fancy Scroll",
+    comp: FancyScroll,
+    path: "fancy_scroll",
+    glsl: {
+      vertexShader: fancy_scroll_ver,
+      fragmentShader: fancy_scroll_frag,
     },
   },
 ];

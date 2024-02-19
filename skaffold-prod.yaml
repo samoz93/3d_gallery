@@ -1,7 +1,5 @@
 apiVersion: skaffold/v4beta9
 kind: Config
-deploy:
-  kubeContext: do-ams3-gall-cluster
 build:
   local:
     push: true

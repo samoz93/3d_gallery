@@ -21,6 +21,7 @@
     "@types/three": "^0.160.0",
     "framer-motion": "^10.16.16",
     "glslify-loader": "^2.0.0",
+    "gsap": "^3.12.5",
     "leva": "^0.9.35",
     "mongoose": "^8.0.3",
     "next": "14.0.4",
@@ -32,9 +33,11 @@
     "swr": "^2.2.4",
     "three": "^0.160.0",
     "three-custom-shader-material": "^5.4.0",
+    "uninstall": "^0.0.0",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
+    "@types/gsap": "^3.0.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -11,6 +11,8 @@ import brain_particles_ver from "./brain_particles_ver.glsl";
 import brain_ver from "./brain_ver.glsl";
 import dissolve_frag from "./dissolve_frag.glsl";
 import dissolve_ver from "./dissolve_vertix.glsl";
+import fancy_scroll_frag from "./fancy_scroll_frag.glsl";
+import fancy_scroll_ver from "./fancy_scroll_ver.glsl";
 import interactive_particles_frag from "./int.particles.frag.glsl";
 import interactive_particles_vertix from "./int.particles.vert.glsl";
 import interactive_sim_frag from "./int.plane.frag.glsl";
@@ -45,6 +47,8 @@ export {
   brain_ver,
   dissolve_frag,
   dissolve_ver,
+  fancy_scroll_frag,
+  fancy_scroll_ver,
   interactive_particles_frag,
   interactive_particles_vertix,
   interactive_sim_frag,

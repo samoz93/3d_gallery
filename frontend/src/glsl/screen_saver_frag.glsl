@@ -101,7 +101,6 @@ void main() {
     int i;
     for (i = 0; i < 80; i++) {
         vec3 p = camPos + rayDir * t;
-        // p += sin(uTime) * t * .02;
         p.z -= uTime * 2.;
         // p.x += sin(t) * .1;
         p.y += sin(t * (uMouse.y + .5) * .5) * .3;
