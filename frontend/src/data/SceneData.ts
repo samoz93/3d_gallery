@@ -6,6 +6,7 @@ import {
   PlayfulChildren,
   PlumbusSphereScene,
   RayMarchingScene,
+  ScorchingSun,
 } from "@samoz/app/scene_components";
 import { GoatScene } from "@samoz/app/scene_components/GoatScene";
 import { ScreenSaverScene } from "@samoz/app/scene_components/ScreenSaverScene";
@@ -26,6 +27,8 @@ import {
   raymarch_ver,
   screen_saver_frag,
   screen_saver_ver,
+  sun_noise_frag,
+  sun_noise_ver,
   vibrant_frag,
   vibrant_ver,
   water_frag,
@@ -129,9 +132,19 @@ export const SceneData: {
     title: "Fancy Scroll",
     comp: FancyScroll,
     path: "fancy_scroll",
+    isDev: true,
     glsl: {
       vertexShader: fancy_scroll_ver,
       fragmentShader: fancy_scroll_frag,
+    },
+  },
+  {
+    title: "Sunny Day",
+    comp: ScorchingSun,
+    path: "sun",
+    glsl: {
+      vertexShader: sun_noise_ver,
+      fragmentShader: sun_noise_frag,
     },
   },
 ];

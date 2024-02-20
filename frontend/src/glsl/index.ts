@@ -25,6 +25,12 @@ import raymarch_frag from "./raymarch_frag.glsl";
 import raymarch_ver from "./raymarch_ver.glsl";
 import screen_saver_frag from "./screen_saver_frag.glsl";
 import screen_saver_ver from "./screen_saver_ver.glsl";
+import sun_fbo_frag from "./sun_fbo_frag.glsl";
+import sun_fbo_ver from "./sun_fbo_ver.glsl";
+import sun_halo_frag from "./sun_halo_frag.glsl";
+import sun_halo_ver from "./sun_halo_ver.glsl";
+import sun_noise_frag from "./sun_noise_frag.glsl";
+import sun_noise_ver from "./sun_noise_ver.glsl";
 import vibrant_frag from "./vibrant_frag.glsl";
 import vibrant_ver from "./vibrant_ver.glsl";
 import water_bg_frag from "./water_bg_frag.glsl";
@@ -61,6 +67,12 @@ export {
   raymarch_ver,
   screen_saver_frag,
   screen_saver_ver,
+  sun_fbo_frag,
+  sun_fbo_ver,
+  sun_halo_frag,
+  sun_halo_ver,
+  sun_noise_frag,
+  sun_noise_ver,
   vibrant_frag,
   vibrant_ver,
   water_bg_frag,

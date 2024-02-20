@@ -53,7 +53,7 @@ export const ThreeCanvas = ({
 
       <Canvas
         onCreated={() => setIsLoaded(true)}
-        style={{ background: "#064273" }}
+        style={{ background: field.bgColor ?? "#064273" }}
         camera={{
           position: cameraPos,
           zoom: field.perspective ? 1 : 50,
