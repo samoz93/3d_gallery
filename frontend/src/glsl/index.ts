@@ -1,4 +1,7 @@
 //@ts-nocheck
+import another_part_frag from "./another_part_frag.glsl";
+import another_part_gpu_frag from "./another_part_gpu_frag.glsl";
+import another_part_ver from "./another_part_ver.glsl";
 import audio_vis_2_frag from "./audio_vis_2_frag.glsl";
 import audio_vis_2_ver from "./audio_vis_2_ver.glsl";
 import audio_vis_frag from "./audio_vis_frag.glsl";
@@ -40,7 +43,13 @@ import water_tube_frag from "./water_tube_frag.glsl";
 import water_tube_ver from "./water_tube_ver.glsl";
 import water_ver from "./water_ver.glsl";
 
+import electric_frag from "./electric_frag.glsl";
+import electric_ver from "./electric_ver.glsl";
+
 export {
+  another_part_frag,
+  another_part_gpu_frag,
+  another_part_ver,
   audio_vis_2_frag,
   audio_vis_2_ver,
   audio_vis_frag,
@@ -53,6 +62,8 @@ export {
   brain_ver,
   dissolve_frag,
   dissolve_ver,
+  electric_frag,
+  electric_ver,
   fancy_scroll_frag,
   fancy_scroll_ver,
   interactive_particles_frag,

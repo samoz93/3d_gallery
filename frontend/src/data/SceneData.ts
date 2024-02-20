@@ -1,4 +1,5 @@
 import {
+  AnotherParticleEffect,
   AudioVisScene,
   BrainScene,
   DancerScene,
@@ -12,6 +13,8 @@ import { GoatScene } from "@samoz/app/scene_components/GoatScene";
 import { ScreenSaverScene } from "@samoz/app/scene_components/ScreenSaverScene";
 import { WaterStreamScene } from "@samoz/app/scene_components/WaterStream";
 import {
+  another_part_frag,
+  another_part_ver,
   audio_vis_frag,
   audio_vis_ver,
   brain_frag,
@@ -145,6 +148,16 @@ export const SceneData: {
     glsl: {
       vertexShader: sun_noise_ver,
       fragmentShader: sun_noise_frag,
+    },
+  },
+  {
+    title: "Another one",
+    comp: AnotherParticleEffect,
+    path: "another_one",
+    isDev: true,
+    glsl: {
+      vertexShader: another_part_ver,
+      fragmentShader: another_part_frag,
     },
   },
 ];

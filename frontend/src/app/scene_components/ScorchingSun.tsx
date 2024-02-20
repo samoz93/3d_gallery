@@ -116,16 +116,6 @@ export const ScorchingSun = ({
 
     cCam1.update(gl, scene1);
     materialSun.uniforms.uTexture.value = cTarget1.texture;
-
-    // gl.setRenderTarget(fbo);
-    // gl.render(scene, camera);
-
-    // perlisShader.uniforms.uTex.value = fbo.texture;
-    // gl.setRenderTarget(null);
-
-    // ref.current!.visible = false;
-
-    // gl.render(scene, camera);
   });
 
   const { updateBloom, updateField } = useZStore((state) => state);
