@@ -180,7 +180,6 @@ export const SceneData: {
     title: "Out Of Ideas",
     comp: TubesScene,
     path: "bg_curves",
-    isDev: true,
     glsl: {
       vertexShader: bg_tube_ver,
       fragmentShader: bg_tube_frag,
