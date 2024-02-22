@@ -65,13 +65,18 @@ export const ThreeCanvas = ({
       >
         <ambientLight />
         <OrbitControls enabled={field.enableOrbit} />
-        <directionalLight
-          castShadow
-          color={"white"}
-          intensity={10}
-          position={[0, 3, 10]}
-        ></directionalLight>
-        <SoftShadows size={0.5} samples={10} focus={1} />
+        {field.enableLights && (
+          <>
+            <directionalLight
+              castShadow
+              color={"white"}
+              intensity={1}
+              position={[0, 3, 10]}
+            ></directionalLight>
+            <SoftShadows size={0.5} samples={10} focus={1} />
+          </>
+        )}
+
         {children}
         {/* <Sky /> */}
         <mesh

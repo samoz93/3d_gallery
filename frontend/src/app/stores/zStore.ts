@@ -11,6 +11,7 @@ type FieldConfig = {
   enableOrbit: boolean;
   perspective: boolean;
   bgColor: string;
+  enableLights: boolean;
 };
 type StoreType = {
   bloom: BloomConfig;
@@ -23,7 +24,7 @@ type Actions = {
   restoreDefault: () => void;
 };
 
-export const zDefaults = {
+export const zDefaults: { bloom: BloomConfig; filed: FieldConfig } = {
   bloom: {
     intensity: 0.5,
     smoothing: 0.5,
@@ -35,6 +36,7 @@ export const zDefaults = {
     enableOrbit: true,
     perspective: true,
     bgColor: "#00cfff",
+    enableLights: true,
   },
 };
 export const useZStore = create<Actions & StoreType>((set) => ({

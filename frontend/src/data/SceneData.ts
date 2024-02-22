@@ -4,10 +4,12 @@ import {
   BrainScene,
   DancerScene,
   FancyScroll,
+  FollowTheLine,
   PlayfulChildren,
   PlumbusSphereScene,
   RayMarchingScene,
   ScorchingSun,
+  TubesScene,
 } from "@samoz/app/scene_components";
 import { GoatScene } from "@samoz/app/scene_components/GoatScene";
 import { ScreenSaverScene } from "@samoz/app/scene_components/ScreenSaverScene";
@@ -17,10 +19,14 @@ import {
   another_part_ver,
   audio_vis_frag,
   audio_vis_ver,
+  bg_tube_frag,
+  bg_tube_ver,
   brain_frag,
   brain_ver,
   dissolve_frag,
   dissolve_ver,
+  electric_frag,
+  electric_ver,
   fancy_scroll_frag,
   fancy_scroll_ver,
   playful_frag,
@@ -158,6 +164,26 @@ export const SceneData: {
     glsl: {
       vertexShader: another_part_ver,
       fragmentShader: another_part_frag,
+    },
+  },
+  {
+    title: "Electric Fence",
+    comp: FollowTheLine,
+    path: "electric_fence",
+    isDev: true,
+    glsl: {
+      vertexShader: electric_ver,
+      fragmentShader: electric_frag,
+    },
+  },
+  {
+    title: "Out Of Ideas",
+    comp: TubesScene,
+    path: "bg_curves",
+    isDev: true,
+    glsl: {
+      vertexShader: bg_tube_ver,
+      fragmentShader: bg_tube_frag,
     },
   },
 ];

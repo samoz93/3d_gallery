@@ -8,12 +8,17 @@ import audio_vis_frag from "./audio_vis_frag.glsl";
 import audio_vis_frag_3 from "./audio_vis_frag_3.glsl";
 import audio_vis_ver from "./audio_vis_ver.glsl";
 import audio_vis_ver_3 from "./audio_vis_ver_3.glsl";
+import bg_tube_frag from "./bg_tube_frag.glsl";
+import bg_tube_plan_frag from "./bg_tube_plan_frag.glsl";
+import bg_tube_ver from "./bg_tube_ver.glsl";
 import brain_frag from "./brain_frag.glsl";
 import brain_particles_frag from "./brain_particles_frag.glsl";
 import brain_particles_ver from "./brain_particles_ver.glsl";
 import brain_ver from "./brain_ver.glsl";
 import dissolve_frag from "./dissolve_frag.glsl";
 import dissolve_ver from "./dissolve_vertix.glsl";
+import electric_frag from "./electric_frag.glsl";
+import electric_ver from "./electric_ver.glsl";
 import fancy_scroll_frag from "./fancy_scroll_frag.glsl";
 import fancy_scroll_ver from "./fancy_scroll_ver.glsl";
 import interactive_particles_frag from "./int.particles.frag.glsl";
@@ -43,9 +48,6 @@ import water_tube_frag from "./water_tube_frag.glsl";
 import water_tube_ver from "./water_tube_ver.glsl";
 import water_ver from "./water_ver.glsl";
 
-import electric_frag from "./electric_frag.glsl";
-import electric_ver from "./electric_ver.glsl";
-
 export {
   another_part_frag,
   another_part_gpu_frag,
@@ -56,6 +58,9 @@ export {
   audio_vis_frag_3,
   audio_vis_ver,
   audio_vis_ver_3,
+  bg_tube_frag,
+  bg_tube_plan_frag,
+  bg_tube_ver,
   brain_frag,
   brain_particles_frag,
   brain_particles_ver,

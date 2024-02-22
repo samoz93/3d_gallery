@@ -9,3 +9,4 @@ export * from "./PlayfulChildren";
 export * from "./PlumbusSphereScene";
 export * from "./RayMarchingScene";
 export * from "./ScorchingSun";
+export * from "./TubesScene";
