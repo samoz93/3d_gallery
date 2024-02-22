@@ -151,7 +151,7 @@ export const TubesScene = ({
     updateField({
       showPlane: false,
       bgColor: "#000000",
-      enableOrbit: true,
+      enableOrbit: false,
       // enableLights: false,
     });
     updateBloom({
