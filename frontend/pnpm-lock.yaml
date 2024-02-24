@@ -32,6 +32,9 @@ dependencies:
   '@types/three':
     specifier: ^0.160.0
     version: 0.160.0
+  '@use-gesture/react':
+    specifier: ^10.3.0
+    version: 10.3.0(react@18.2.0)
   framer-motion:
     specifier: ^10.16.16
     version: 10.18.0(react-dom@18.2.0)(react@18.2.0)
@@ -41,6 +44,9 @@ dependencies:
   gsap:
     specifier: ^3.12.5
     version: 3.12.5
+  lethargy:
+    specifier: ^1.0.9
+    version: 1.0.9
   leva:
     specifier: ^0.9.35
     version: 0.9.35(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
@@ -3454,6 +3460,10 @@ packages:
     dependencies:
       language-subtag-registry: 0.3.22
     dev: true
+
+  /lethargy@1.0.9:
+    resolution: {integrity: sha512-nFM8blpCF9rqIL5mRAaTGc78W8oQixVtsD86jbEPvcI13+lDUYJf3R7DZQQL7tCiBpbGpGKMX2gwJFO9hiaOkg==}
+    dev: false
 
   /leva@0.9.35(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-sp/ZbHGrrzM+eq+wIAc9X7C5qFagNERYkwaulKI/xy0XrDPV67jLUSSqTCFSoSc0Uk96j3oephYoO/6I8mZNuw==}

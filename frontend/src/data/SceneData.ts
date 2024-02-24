@@ -1,7 +1,6 @@
 import {
   AnotherParticleEffect,
   AudioVisScene,
-  BrainScene,
   DancerScene,
   FancyScroll,
   FollowTheLine,
@@ -13,6 +12,7 @@ import {
 } from "@samoz/app/scene_components";
 import { GoatScene } from "@samoz/app/scene_components/GoatScene";
 import { ScreenSaverScene } from "@samoz/app/scene_components/ScreenSaverScene";
+import { ScrollTransitionScene } from "@samoz/app/scene_components/ScrollTransitionScene";
 import { WaterStreamScene } from "@samoz/app/scene_components/WaterStream";
 import {
   another_part_frag,
@@ -21,8 +21,6 @@ import {
   audio_vis_ver,
   bg_tube_frag,
   bg_tube_ver,
-  brain_frag,
-  brain_ver,
   dissolve_frag,
   dissolve_ver,
   electric_frag,
@@ -36,6 +34,8 @@ import {
   raymarch_ver,
   screen_saver_frag,
   screen_saver_ver,
+  scroll_transition_frag,
+  scroll_transition_ver,
   sun_noise_frag,
   sun_noise_ver,
   vibrant_frag,
@@ -49,13 +49,16 @@ type GlslData = {
   fragmentShader: string;
 };
 
-export const SceneData: {
+export type ISceneData = {
   path: string;
   title: string;
   isDev?: boolean;
+  disableThreeJs?: boolean;
   comp: ({ glsl, props }: { glsl: GlslData; props?: any }) => JSX.Element;
   glsl: GlslData;
-}[] = [
+};
+
+export const SceneData: ISceneData[] = [
   {
     path: "DancerScene",
     title: "Dancer Scene",
@@ -92,15 +95,15 @@ export const SceneData: {
       fragmentShader: vibrant_frag,
     },
   },
-  {
-    title: "Brain",
-    comp: BrainScene,
-    path: "brain_scene",
-    glsl: {
-      vertexShader: brain_ver,
-      fragmentShader: brain_frag,
-    },
-  },
+  // {
+  //   title: "Brain",
+  //   comp: BrainScene,
+  //   path: "brain_scene",
+  //   glsl: {
+  //     vertexShader: brain_ver,
+  //     fragmentShader: brain_frag,
+  //   },
+  // },
   {
     title: "Water Streams",
     comp: WaterStreamScene,
@@ -183,6 +186,16 @@ export const SceneData: {
     glsl: {
       vertexShader: bg_tube_ver,
       fragmentShader: bg_tube_frag,
+    },
+  },
+  {
+    title: "Sweet",
+    comp: ScrollTransitionScene,
+    path: "sweat",
+    disableThreeJs: true,
+    glsl: {
+      vertexShader: scroll_transition_ver,
+      fragmentShader: scroll_transition_frag,
     },
   },
 ];

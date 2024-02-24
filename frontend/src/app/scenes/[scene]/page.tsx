@@ -1,6 +1,6 @@
 import { ThreeCanvas } from "@samoz/app/3d_components/ThreeCanvas";
 import { ThreeLoader } from "@samoz/app/3d_components/ThreeLoader";
-import { SceneData } from "@samoz/data";
+import { ISceneData, SceneData } from "@samoz/data";
 import { Metadata } from "next";
 import { Suspense, useMemo } from "react";
 
@@ -10,16 +10,24 @@ type ScenePageProps = {
 };
 
 export default function ScenePage({ params }: { params: { scene: string } }) {
-  const { comp: Scene, glsl } = useMemo(() => {
-    return (
-      SceneData.find((scene) => scene.path === params.scene) ||
-      ({} as ScenePageProps)
-    );
-  }, [params.scene]);
+  const {
+    comp: Scene,
+    glsl,
+    disableThreeJs,
+  } = useMemo(() => {
+    return SceneData.find(
+      (scene) => scene.path === params.scene
+    )! satisfies ISceneData;
+  }, [params]);
 
   return (
     <Suspense fallback={<ThreeLoader />}>
-      <ThreeCanvas> {Scene && <Scene glsl={glsl} />}</ThreeCanvas>
+      {disableThreeJs && <Scene glsl={glsl} />}
+      {!disableThreeJs && (
+        <ThreeCanvas>
+          <Scene glsl={glsl} />
+        </ThreeCanvas>
+      )}
     </Suspense>
   );
 }

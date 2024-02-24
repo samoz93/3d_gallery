@@ -33,6 +33,8 @@ import raymarch_frag from "./raymarch_frag.glsl";
 import raymarch_ver from "./raymarch_ver.glsl";
 import screen_saver_frag from "./screen_saver_frag.glsl";
 import screen_saver_ver from "./screen_saver_ver.glsl";
+import scroll_transition_frag from "./scroll_transition_frag.glsl";
+import scroll_transition_ver from "./scroll_transition_ver.glsl";
 import sun_fbo_frag from "./sun_fbo_frag.glsl";
 import sun_fbo_ver from "./sun_fbo_ver.glsl";
 import sun_halo_frag from "./sun_halo_frag.glsl";
@@ -83,6 +85,8 @@ export {
   raymarch_ver,
   screen_saver_frag,
   screen_saver_ver,
+  scroll_transition_frag,
+  scroll_transition_ver,
   sun_fbo_frag,
   sun_fbo_ver,
   sun_halo_frag,
